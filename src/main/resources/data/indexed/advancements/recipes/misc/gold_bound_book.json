@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "indexed:gold_bound_book"
+    ]
+  },
+  "criteria": {
+    "has_fragment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:book"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "indexed:gold_bound_book"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_fragment",
+      "has_the_recipe"
+    ]
+  ]
+}

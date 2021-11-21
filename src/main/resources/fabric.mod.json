@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "indexed",
+  "version": "${version}",
+
+  "name": "Indexed",
+  "description": "Anvil and Enchanting Revamp",
+  "authors": [
+    "Astrazoey"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": ""
+  },
+
+  "license": "MIT",
+  "icon": "assets/indexed/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.astrazoey.indexed.Indexed"
+    ]
+  },
+  "mixins": [
+    "indexed.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "1.17.x",
+    "java": ">=16"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

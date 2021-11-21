@@ -1,0 +1,13 @@
+{
+  "item.indexed.enchantment_tooltip": "%d/%d",
+  "item.indexed.gold_bound_book": "Gold Bound Book",
+  "container.indexed.overcharged": "Overcharged!",
+  "enchantment.indexed.forgery": "Forgery",
+  "enchantment.indexed.essence": "Essence",
+  "enchantment.indexed.slow_burn": "Slow Burn",
+  "enchantment.indexed.quick_flight": "Quick Flight",
+  "enchantment.indexed.keeping": "Keeping",
+  "enchantment.indexed.hidden_curse": "Curse of the Hidden",
+  "enchantment.indexed.mystery_curse": "Curse of Mystery",
+  "enchantment.indexed.mystery_tooltip": "Curse of Mystery"
+}
