@@ -31,16 +31,4 @@ public class EnchantmentHelperMixin {
         return acceptabilityTest.checkAcceptability(enchantment, itemType);
     }
 
-    @Redirect(method = "generateEnchantments", at = @At(value="INVOKE", target = "Lnet/minecraft/enchantment/EnchantmentHelper;getPossibleEntries(ILnet/minecraft/item/ItemStack;Z)Ljava/util/List;"))
-    private static List<EnchantmentLevelEntry> printEnchantments(int power, ItemStack stack, boolean treasureAllowed) {
-        List<EnchantmentLevelEntry> list2 = EnchantmentHelper.getPossibleEntries(power, stack, treasureAllowed);
-        System.out.println("====ENCHANTMENTS====");
-
-        for(EnchantmentLevelEntry enchantmentLevelEntry : list2) {
-            System.out.println("Enchantment: " + enchantmentLevelEntry.enchantment.getName(enchantmentLevelEntry.level));
-        }
-
-        return list2;
-    }
-
 }

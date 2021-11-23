@@ -39,6 +39,8 @@ New Stuff:
 
 Planned:
  - //TODO: Curse of Deceit: Item lies about its durability.
+ - //FIXME: Anvil allows Overcharged crafting when "AnvilImprovementsEnabled" set to true.
+ - //FIXME: Keeping enchantment does nothing when Charm's "Totem of Preserving" set to true.
 
 Things to think about:
  - //Think: Fortune and Silk Touch are mutex

@@ -6,11 +6,12 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.screen.EnchantmentScreenHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(targets = {"net/minecraft/screen/EnchantmentScreenHandler"})
+@Mixin(EnchantmentScreenHandler.class)
 public class GoldBoundBookMixin {
     @Redirect(method = "method_17410", at = @At(value="INVOKE", target = "Lnet/minecraft/item/ItemStack;isOf(Lnet/minecraft/item/Item;)Z", ordinal = 0))
     public boolean allowBookItem(ItemStack itemStack, Item item) {

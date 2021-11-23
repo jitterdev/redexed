@@ -3,18 +3,15 @@ package com.astrazoey.indexed.mixins;
 import com.astrazoey.indexed.EnchantingAcceptability;
 import com.astrazoey.indexed.Indexed;
 import com.astrazoey.indexed.MaxEnchantingSlots;
-import com.astrazoey.indexed.registry.IndexedItems;
 import net.minecraft.client.gui.screen.ingame.AnvilScreen;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.AnvilScreenHandler;
+import net.minecraft.screen.Property;
 import net.minecraft.screen.slot.Slot;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.*;
@@ -72,7 +69,6 @@ public class AnvilScreenHandlerMixin {
             float enchantingFactor = enchantingRatio * repairScaling;
             enchantingFactor = Math.round(enchantingFactor);
             enchantingFactor = enchantingFactor * MaxEnchantingSlots.getEnchantType(itemStack1).getRepairScaling();
-            System.out.println("Enchanting Factor = " + enchantingFactor);
 
             //Removes repair cost if forgery is enabled
             enchantingFactor = enchantingFactor - (EnchantmentHelper.getLevel(Indexed.FORGERY, itemStack1) * MaxEnchantingSlots.getEnchantType(itemStack1).getRepairScaling());
@@ -144,7 +140,6 @@ public class AnvilScreenHandlerMixin {
         //Reduce repair cost for Forgery enchantments
         if (EnchantmentHelper.getLevel(Indexed.FORGERY, itemStack) > 0) {
             if ((EnchantmentHelper.getLevel(Indexed.FORGERY, itemStack) >= 5) && (itemStack.getRepairCost() > 10)) {
-                System.out.println("updating repair cost");
                 itemStack.setRepairCost(10);
             } else if ((EnchantmentHelper.getLevel(Indexed.FORGERY, itemStack) >= 3) && (itemStack.getRepairCost() > 20)) {
                 itemStack.setRepairCost(20);
@@ -159,6 +154,16 @@ public class AnvilScreenHandlerMixin {
             }
         }
     }
+
+    @Redirect(method = "updateResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/Property;set(I)V", ordinal = 5))
+    public void freeRepairCost(Property property, int value) {
+        if(itemStack3.getItem() != Items.ENCHANTED_BOOK && itemStack3.getItem() != itemStack1.getItem()) {
+            property.set(0);
+        } else {
+            property.set(value);
+        }
+    }
+
 
 }
 

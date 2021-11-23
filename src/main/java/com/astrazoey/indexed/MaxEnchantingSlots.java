@@ -17,10 +17,8 @@ public interface MaxEnchantingSlots {
     static boolean setEnchantType(Item item, EnchantingType enchantingType) {
 
         if(item == Items.AIR) {
-            System.out.println("Item passed is air. Try again.");
             return false;
         } else {
-            System.out.println("Registered enchanting type: " + enchantingType + " for item " + item);
             ((MaxEnchantingSlots) item).setEnchantingType(enchantingType);
             return true;
         }

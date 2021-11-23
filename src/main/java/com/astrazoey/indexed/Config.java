@@ -86,7 +86,7 @@ public class Config {
             int maxSlots = enchantConfig.maxEnchantingSlots;
             float repairScale = enchantConfig.repairScaling;
 
-            System.out.println("Found entry at " + i + ". It is called \"" + itemName + "\" and has " + maxSlots + " max slots and repair scaling of " + repairScale);
+            //System.out.println("Found entry at " + i + ". It is called \"" + itemName + "\" and has " + maxSlots + " max slots and repair scaling of " + repairScale);
 
             Identifier itemIdentifier = new Identifier(itemName);
             ThreadLocal<Identifier> localItemIdentifier = new ThreadLocal<Identifier>();
@@ -94,7 +94,6 @@ public class Config {
 
             Item registerItem = Registry.ITEM.get(localItemIdentifier.get());
 
-            System.out.println("The registered item is " + registerItem);
 
             MaxEnchantingSlots.setEnchantType(registerItem, new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(maxSlots).repairScaling(repairScale)));
 
@@ -301,6 +300,7 @@ public class Config {
         defaultConfig.put("betterend:crystalite_helmet", EnchantingTypes.CRYSTALITE.getEnchantabilityConfig());
         defaultConfig.put("betterend:crystalite_chestplate", EnchantingTypes.CRYSTALITE.getEnchantabilityConfig());
         defaultConfig.put("betterend:crystalite_leggings", EnchantingTypes.CRYSTALITE.getEnchantabilityConfig());
+        defaultConfig.put("betterend:crystalite_boots", EnchantingTypes.CRYSTALITE.getEnchantabilityConfig());
 
 
         //Better Nether
