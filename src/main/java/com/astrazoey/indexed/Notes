@@ -39,6 +39,7 @@ New Stuff:
 
 Planned:
  - //TODO: Curse of Deceit: Item lies about its durability.
+ - //TODO: "Reeling" enchantment for fishing rods which allows the line to be cast further.
  - //FIXME: Anvil allows Overcharged crafting when "AnvilImprovementsEnabled" set to true.
  - //FIXME: Keeping enchantment does nothing when Charm's "Totem of Preserving" set to true.
 

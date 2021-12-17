@@ -1,30 +1,41 @@
 package com.astrazoey.indexed.mixins;
 
 import com.astrazoey.indexed.EnchantingType;
+import com.astrazoey.indexed.EnchantingTypes;
+import com.astrazoey.indexed.Indexed;
 import com.astrazoey.indexed.MaxEnchantingSlots;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Mixin(Item.class)
 public abstract class ItemMixin implements MaxEnchantingSlots {
@@ -97,6 +108,31 @@ class ItemStackMixin {
                 mutableText = (new TranslatableText("item.indexed.enchantment_tooltip", MaxEnchantingSlots.getCurrent((ItemStack) (Object) this), MaxEnchantingSlots.getEnchantType((ItemStack) (Object) this).getMaxEnchantingSlots())).formatted(formatting);
 
                 list.add(mutableText);
+            }
+        }
+    }
+
+    @Inject(method= "postHit", at = @At(value = "HEAD"))
+    public void checkItemUse(LivingEntity target, PlayerEntity attacker, CallbackInfo ci) {
+        if(attacker instanceof ServerPlayerEntity) {
+            grantAdvancementOnUseWithGold(((ItemStack) (Object) this), (ServerPlayerEntity) attacker);
+        }
+    }
+
+    private void grantAdvancementOnUseWithGold(ItemStack stack, ServerPlayerEntity user) {
+        EnchantingType enchantingType = MaxEnchantingSlots.getEnchantType(stack);
+
+        if(enchantingType != null && stack.isOf(Items.GOLDEN_SWORD)) {
+            if(MaxEnchantingSlots.getCurrent(stack) >= enchantingType.getMaxEnchantingSlots()) {
+                if(user != null) {
+                    Indexed.MAX_GOLD.trigger((ServerPlayerEntity) user);
+                }
+            }
+        }
+
+        if(EnchantmentHelper.getLevel(Enchantments.KNOCKBACK,stack) >= 5) {
+            if(user != null) {
+                Indexed.MAX_KNOCKBACK.trigger(user);
             }
         }
     }

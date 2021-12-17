@@ -1,6 +1,7 @@
 package com.astrazoey.indexed.mixins;
 
 import com.astrazoey.indexed.ConfigMain;
+import com.astrazoey.indexed.Indexed;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -9,6 +10,7 @@ import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
@@ -82,6 +84,11 @@ public abstract class CrossbowItemMixin extends Item {
                 shoot(world, entity, hand, stack, itemStack, fs[i], bl, speed/1.3f, divergence, -12.5F);
             }
         }
+
+        if(EnchantmentHelper.getLevel(Enchantments.MULTISHOT, stack) >= 5 && entity instanceof ServerPlayerEntity) {
+            Indexed.MULTISHOT_CROSSBOW.trigger((ServerPlayerEntity) entity);
+        }
+
     }
 
     @Override

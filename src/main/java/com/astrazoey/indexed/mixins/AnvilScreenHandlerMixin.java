@@ -6,6 +6,7 @@ import com.astrazoey.indexed.MaxEnchantingSlots;
 import net.minecraft.client.gui.screen.ingame.AnvilScreen;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -13,6 +14,7 @@ import net.minecraft.item.Items;
 import net.minecraft.screen.AnvilScreenHandler;
 import net.minecraft.screen.Property;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.*;
 import net.minecraft.client.font.TextRenderer;
@@ -21,8 +23,9 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(AnvilScreenHandler.class)
+@Mixin(value = AnvilScreenHandler.class, priority = 999)
 public class AnvilScreenHandlerMixin {
 
     ItemStack itemStack1;
@@ -53,13 +56,6 @@ public class AnvilScreenHandlerMixin {
     public boolean checkAcceptability(Enchantment enchantment, ItemStack stack) {
         EnchantingAcceptability acceptabilityTest = new EnchantingAcceptability();
         return acceptabilityTest.checkAcceptability(enchantment, stack);
-
-        /*
-        if(enchantment == Indexed.SLOW_BURN && !stack.isOf(Items.ELYTRA)) {
-            return false;
-        } else {
-            return enchantment.isAcceptableItem(stack);
-        }*/
     }
 
     //Change the amount of materials required for repair
@@ -71,7 +67,7 @@ public class AnvilScreenHandlerMixin {
             enchantingFactor = enchantingFactor * MaxEnchantingSlots.getEnchantType(itemStack1).getRepairScaling();
 
             //Removes repair cost if forgery is enabled
-            enchantingFactor = enchantingFactor - (EnchantmentHelper.getLevel(Indexed.FORGERY, itemStack1) * MaxEnchantingSlots.getEnchantType(itemStack1).getRepairScaling());
+            enchantingFactor = enchantingFactor - (EnchantmentHelper.getLevel(Indexed.FORGERY, itemStack1) * 2 * MaxEnchantingSlots.getEnchantType(itemStack1).getRepairScaling());
             if(enchantingFactor < 0) {
                 enchantingFactor = 0;
             }
@@ -132,26 +128,13 @@ public class AnvilScreenHandlerMixin {
         }
     }
 
-
     //Remove "Too Expensive!" stuff by keeping the repair cost of the item under 31.
     @Redirect(method = "updateResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;setRepairCost(I)V"))
     public void removeTooExpensiveLimit(ItemStack itemStack, int repairCost) {
-
-        //Reduce repair cost for Forgery enchantments
-        if (EnchantmentHelper.getLevel(Indexed.FORGERY, itemStack) > 0) {
-            if ((EnchantmentHelper.getLevel(Indexed.FORGERY, itemStack) >= 5) && (itemStack.getRepairCost() > 10)) {
-                itemStack.setRepairCost(10);
-            } else if ((EnchantmentHelper.getLevel(Indexed.FORGERY, itemStack) >= 3) && (itemStack.getRepairCost() > 20)) {
-                itemStack.setRepairCost(20);
-            } else if ((EnchantmentHelper.getLevel(Indexed.FORGERY, itemStack) >= 1) && (itemStack.getRepairCost() > 25)) {
-                itemStack.setRepairCost(25);
-            }
-        } else { //remove "too expensive" problem
-            if(repairCost > 30) {
-                itemStack.setRepairCost(30);
-            } else {
-                itemStack.setRepairCost(repairCost);
-            }
+        if(repairCost > 30) {
+            itemStack.setRepairCost(30);
+        } else {
+            itemStack.setRepairCost(repairCost);
         }
     }
 
@@ -160,7 +143,20 @@ public class AnvilScreenHandlerMixin {
         if(itemStack3.getItem() != Items.ENCHANTED_BOOK && itemStack3.getItem() != itemStack1.getItem()) {
             property.set(0);
         } else {
-            property.set(value);
+            int maxRepairCost = 30 - (EnchantmentHelper.getLevel(Indexed.FORGERY, itemStack1) * 5);
+            if(value > maxRepairCost) {
+                property.set(maxRepairCost);
+            } else {
+                property.set(value);
+            }
+        }
+    }
+
+    @Inject(method="onTakeOutput", at = @At(value = "INVOKE", target = "Lnet/minecraft/inventory/Inventory;getStack(I)Lnet/minecraft/item/ItemStack;"))
+    public void grantRepairAdvancement(PlayerEntity player, ItemStack stack, CallbackInfo ci) {
+        System.out.println("Grant repair activated.");
+        if(player instanceof ServerPlayerEntity) {
+            Indexed.REPAIR_ITEM.trigger((ServerPlayerEntity) player);
         }
     }
 
