@@ -37,5 +37,6 @@
   "advancements.indexed.story.slow_burn.title": "Slow and Steady",
   "advancements.indexed.story.slow_burn.description": "Put Slow Burn on an Elytra to make the rockets last longer and reduce the boost velocity.",
   "advancements.indexed.story.max_knockback.title": "Begone!",
-  "advancements.indexed.story.max_knockback.description": "Use a Knockback V sword."
+  "advancements.indexed.story.max_knockback.description": "Use a Knockback V sword.",
+  "effect.indexed.enchanted" : "Enchanted"
 }

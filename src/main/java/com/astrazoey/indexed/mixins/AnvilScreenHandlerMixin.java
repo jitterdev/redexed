@@ -104,11 +104,7 @@ public class AnvilScreenHandlerMixin {
         if(overcharged) {
             return 50000; //prevent taking out overcharged items
         }
-        if(itemStack3.isEmpty()) {
-            return 0;
-        } else {
-            return -1;
-        }
+        return -1;
     }
 
     @Redirect(method="updateResult", at = @At(value="INVOKE", target="Lnet/minecraft/inventory/CraftingResultInventory;setStack(ILnet/minecraft/item/ItemStack;)V", ordinal=4))

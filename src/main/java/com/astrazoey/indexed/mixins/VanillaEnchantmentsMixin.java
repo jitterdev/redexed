@@ -319,7 +319,7 @@ class MendingEnchantmentMixin extends Enchantment {
 @Mixin(MultishotEnchantment.class)
 class MultishotEnchantmentMixin extends Enchantment {
     protected MultishotEnchantmentMixin(Rarity weight, EnchantmentTarget type, EquipmentSlot[] slotTypes) {
-        super(weight, type, slotTypes);
+        super(Rarity.VERY_RARE, type, slotTypes);
     }
 
     /**
