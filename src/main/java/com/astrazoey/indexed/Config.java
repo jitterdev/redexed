@@ -495,9 +495,30 @@ public class Config {
         defaultConfig.put("valley:turtle_leggings", EnchantingTypes.TURTLE_HELMET.getEnchantabilityConfig());
         defaultConfig.put("valley:turtle_boots", EnchantingTypes.TURTLE_HELMET.getEnchantabilityConfig());
 
-        defaultConfig.put("valley:tongs", EnchantingTypes.SHEARS.getEnchantabilityConfig());
+        defaultConfig.put("valley:tongs", EnchantingTypes.GENERIC.getEnchantabilityConfig());
         defaultConfig.put("valley:lumber_axe", EnchantingTypes.IRON_TIER.getEnchantabilityConfig());
         defaultConfig.put("valley:fur_chestplate", EnchantingTypes.LEATHER_TIER.getEnchantabilityConfig());
+
+        // Impaled
+        defaultConfig.put("impaled:pitchfork", EnchantingTypes.IRON_TIER.getEnchantabilityConfig());
+        defaultConfig.put("impaled:atlan", EnchantingTypes.GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("impaled:elder_trident", EnchantingTypes.DIAMOND_TIER.getEnchantabilityConfig());
+        defaultConfig.put("impaled:hellfork", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+
+        // Harvest Scythes
+        defaultConfig.put("harvest_scythes:wooden_scythe", EnchantingTypes.WOOD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("harvest_scythes:stone_scythe", EnchantingTypes.STONE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("harvest_scythes:iron_scythe", EnchantingTypes.IRON_TIER.getEnchantabilityConfig());
+        defaultConfig.put("harvest_scythes:golden_scythe", EnchantingTypes.GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("harvest_scythes:diamond_scythe", EnchantingTypes.DIAMOND_TIER.getEnchantabilityConfig());
+        defaultConfig.put("harvest_scythes:netherite_scythe", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+
+        defaultConfig.put("harvest_scythes:wooden_machete", EnchantingTypes.WOOD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("harvest_scythes:stone_machete", EnchantingTypes.STONE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("harvest_scythes:iron_machete", EnchantingTypes.IRON_TIER.getEnchantabilityConfig());
+        defaultConfig.put("harvest_scythes:golden_machete", EnchantingTypes.GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("harvest_scythes:diamond_machete", EnchantingTypes.DIAMOND_TIER.getEnchantabilityConfig());
+        defaultConfig.put("harvest_scythes:netherite_machete", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
 
         File directory = configFile.getParentFile();
         if(directory.exists()) {
