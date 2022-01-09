@@ -439,7 +439,6 @@ public class Config {
         defaultConfig.put("dragonloot:dragon_bow", dragonExtraConfig);
         defaultConfig.put("dragonloot:dragon_trident", dragonExtraConfig);
 
-
         //Rat Mischeif
         defaultConfig.put("ratsmischief:rat_mask", EnchantingTypes.GOLD_TIER.getEnchantabilityConfig());
 
@@ -519,6 +518,24 @@ public class Config {
         defaultConfig.put("harvest_scythes:golden_machete", EnchantingTypes.GOLD_TIER.getEnchantabilityConfig());
         defaultConfig.put("harvest_scythes:diamond_machete", EnchantingTypes.DIAMOND_TIER.getEnchantabilityConfig());
         defaultConfig.put("harvest_scythes:netherite_machete", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+
+        // Go Fish
+        defaultConfig.put("gofish:skeletal_rod", EnchantingTypes.BONE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("gofish:blaze_rod", EnchantingTypes.DIAMOND_TIER.getEnchantabilityConfig());
+        defaultConfig.put("gofish:soul_rod", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("gofish:diamond_reinforced_rod", EnchantingTypes.DIAMOND_TIER.getEnchantabilityConfig());
+        defaultConfig.put("gofish:ender_rod", EnchantingTypes.DIAMOND_TIER.getEnchantabilityConfig());
+        defaultConfig.put("gofish:matrix_rod", EnchantingTypes.DIAMOND_TIER.getEnchantabilityConfig());
+        defaultConfig.put("gofish:frosted_rod", EnchantingTypes.IRON_TIER.getEnchantabilityConfig());
+        defaultConfig.put("gofish:slime_rod", EnchantingTypes.IRON_TIER.getEnchantabilityConfig());
+        defaultConfig.put("gofish:celestial_rod", EnchantingTypes.GOLD_TIER.getEnchantabilityConfig());
+
+
+
+
+
+
+
 
         File directory = configFile.getParentFile();
         if(directory.exists()) {
