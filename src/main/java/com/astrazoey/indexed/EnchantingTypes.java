@@ -25,6 +25,9 @@ public class EnchantingTypes {
 
     //Modded Types
     public static final EnchantingType ELYTRA_MODIFIED;
+    public static final EnchantingType ROSE_GOLD_TIER;
+    public static final EnchantingType BONE_TIER;
+
 
     //Better End Types
     public static final EnchantingType TERMINITE;
@@ -72,6 +75,8 @@ public class EnchantingTypes {
 
         //Modded Support
         ELYTRA_MODIFIED = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(5).repairScaling(1f));
+        ROSE_GOLD_TIER = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(18).repairScaling(0.5f));
+        BONE_TIER = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(5).repairScaling(1f));
 
         //Better End Support
         AETERNIUM = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(8).repairScaling(1f));

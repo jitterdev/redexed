@@ -455,7 +455,49 @@ public class Config {
         defaultConfig.put("consistency_plus:turtle_leggings", EnchantingTypes.TURTLE_HELMET.getEnchantabilityConfig());
         defaultConfig.put("consistency_plus:turtle_boots", EnchantingTypes.TURTLE_HELMET.getEnchantabilityConfig());
 
+        //ValleyCraft
+        defaultConfig.put("valley:rg_helmet", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:rg_chestplate", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:rg_leggings", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:rg_boots", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:rg_sword", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:rg_axe", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:rg_shovel", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:rg_hoe", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:rg_pickaxe", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
 
+        defaultConfig.put("valley:wood_knife", EnchantingTypes.WOOD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:stone_knife", EnchantingTypes.STONE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:iron_knife", EnchantingTypes.IRON_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:golden_knife", EnchantingTypes.GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:diamond_knife", EnchantingTypes.DIAMOND_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:netherite_knife", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:rg_knife", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:bone_knife", EnchantingTypes.BONE_TIER.getEnchantabilityConfig());
+
+        defaultConfig.put("valley:wood_sickle", EnchantingTypes.WOOD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:stone_sickle", EnchantingTypes.STONE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:iron_sickle", EnchantingTypes.IRON_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:golden_sickle", EnchantingTypes.GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:diamond_sickle", EnchantingTypes.DIAMOND_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:netherite_sickle", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:rg_sickle", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+
+        defaultConfig.put("valley:wood_hatchet", EnchantingTypes.WOOD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:stone_hatchet", EnchantingTypes.STONE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:iron_hatchet", EnchantingTypes.IRON_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:golden_hatchet", EnchantingTypes.GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:diamond_hatchet", EnchantingTypes.DIAMOND_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:netherite_hatchet", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:rg_hatchet", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+
+        defaultConfig.put("valley:turtle_chestplate", EnchantingTypes.TURTLE_HELMET.getEnchantabilityConfig());
+        defaultConfig.put("valley:turtle_leggings", EnchantingTypes.TURTLE_HELMET.getEnchantabilityConfig());
+        defaultConfig.put("valley:turtle_boots", EnchantingTypes.TURTLE_HELMET.getEnchantabilityConfig());
+
+        defaultConfig.put("valley:tongs", EnchantingTypes.SHEARS.getEnchantabilityConfig());
+        defaultConfig.put("valley:lumber_axe", EnchantingTypes.IRON_TIER.getEnchantabilityConfig());
+        defaultConfig.put("valley:fur_chestplate", EnchantingTypes.LEATHER_TIER.getEnchantabilityConfig());
 
         File directory = configFile.getParentFile();
         if(directory.exists()) {
