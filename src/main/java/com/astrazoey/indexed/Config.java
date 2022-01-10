@@ -530,11 +530,28 @@ public class Config {
         defaultConfig.put("gofish:slime_rod", EnchantingTypes.IRON_TIER.getEnchantabilityConfig());
         defaultConfig.put("gofish:celestial_rod", EnchantingTypes.GOLD_TIER.getEnchantabilityConfig());
 
+        // Additional Additions
+        defaultConfig.put("additionaladditions:rose_gold_helmet", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("additionaladditions:rose_gold_chestplate", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("additionaladditions:rose_gold_leggings", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("additionaladditions:rose_gold_boots", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("additionaladditions:rose_gold_sword", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("additionaladditions:rose_gold_axe", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("additionaladditions:rose_gold_shovel", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("additionaladditions:rose_gold_hoe", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("additionaladditions:rose_gold_pickaxe", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
 
+        defaultConfig.put("additionaladditions:gilded_netherite_helmet", EnchantingTypes.NETHERITE_GILDED.getEnchantabilityConfig());
+        defaultConfig.put("additionaladditions:gilded_netherite_chestplate", EnchantingTypes.NETHERITE_GILDED.getEnchantabilityConfig());
+        defaultConfig.put("additionaladditions:gilded_netherite_leggings", EnchantingTypes.NETHERITE_GILDED.getEnchantabilityConfig());
+        defaultConfig.put("additionaladditions:gilded_netherite_boots", EnchantingTypes.NETHERITE_GILDED.getEnchantabilityConfig());
+        defaultConfig.put("additionaladditions:gilded_netherite_sword", EnchantingTypes.NETHERITE_GILDED.getEnchantabilityConfig());
+        defaultConfig.put("additionaladditions:gilded_netherite_axe", EnchantingTypes.NETHERITE_GILDED.getEnchantabilityConfig());
+        defaultConfig.put("additionaladditions:gilded_netherite_shovel", EnchantingTypes.NETHERITE_GILDED.getEnchantabilityConfig());
+        defaultConfig.put("additionaladditions:gilded_netherite_hoe", EnchantingTypes.NETHERITE_GILDED.getEnchantabilityConfig());
+        defaultConfig.put("additionaladditions:gilded_netherite_pickaxe", EnchantingTypes.NETHERITE_GILDED.getEnchantabilityConfig());
 
-
-
-
+        defaultConfig.put("additionaladditions:crossbow_with_spyglass", EnchantingTypes.CROSSBOW.getEnchantabilityConfig());
 
 
         File directory = configFile.getParentFile();
