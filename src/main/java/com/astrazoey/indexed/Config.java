@@ -553,6 +553,18 @@ public class Config {
 
         defaultConfig.put("additionaladditions:crossbow_with_spyglass", EnchantingTypes.CROSSBOW.getEnchantabilityConfig());
 
+        // Oxidized
+        defaultConfig.put("oxidized:rose_gold_sword", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("oxidized:rose_gold_axe", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("oxidized:rose_gold_shovel", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("oxidized:rose_gold_hoe", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("oxidized:rose_gold_pickaxe", EnchantingTypes.ROSE_GOLD_TIER.getEnchantabilityConfig());
+
+        // Conjuring
+        defaultConfig.put("conjuring:soul_alloy_sword", EnchantingTypes.SOUL_ALLOY.getEnchantabilityConfig());
+        defaultConfig.put("conjuring:soul_alloy_shovel", EnchantingTypes.SOUL_ALLOY.getEnchantabilityConfig());
+        defaultConfig.put("conjuring:soul_alloy_hatchet", EnchantingTypes.SOUL_ALLOY.getEnchantabilityConfig());
+        defaultConfig.put("conjuring:soul_alloy_pickaxe", EnchantingTypes.SOUL_ALLOY.getEnchantabilityConfig());
 
         File directory = configFile.getParentFile();
         if(directory.exists()) {

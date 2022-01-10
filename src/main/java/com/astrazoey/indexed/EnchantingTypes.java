@@ -43,6 +43,9 @@ public class EnchantingTypes {
     //Dragon Loot Types
     public static final EnchantingType DRAGON;
 
+    //Conjuring Types
+    public static final EnchantingType SOUL_ALLOY;
+
     static {
         GENERIC = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(5).repairScaling(1f));
 
@@ -87,6 +90,8 @@ public class EnchantingTypes {
         //Dragon Loot Support
         DRAGON = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(8).repairScaling(1f));
 
+        //Conjuring Support
+        SOUL_ALLOY = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(15).repairScaling(1f));
     }
 
 }
