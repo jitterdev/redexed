@@ -1,0 +1,31 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "indexed:block/crystal_globe_0"
+    },
+    "level=1": {
+      "model": "indexed:block/crystal_globe_1"
+    },
+    "level=2": {
+      "model": "indexed:block/crystal_globe_2"
+    },
+    "level=3": {
+      "model": "indexed:block/crystal_globe_3"
+    },
+    "level=4": {
+      "model": "indexed:block/crystal_globe_4"
+    },
+    "level=5": {
+      "model": "indexed:block/crystal_globe_5"
+    },
+    "level=6": {
+      "model": "indexed:block/crystal_globe_6"
+    },
+    "level=7": {
+      "model": "indexed:block/crystal_globe_7"
+    },
+    "level=8": {
+      "model": "indexed:block/crystal_globe_8"
+    }
+  }
+}

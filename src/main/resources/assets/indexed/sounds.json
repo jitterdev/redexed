@@ -1,0 +1,21 @@
+{
+  "use_crystal_globe": {
+    "subtitle": "subtitles.indexed.use_crystal_globe",
+    "sounds": [
+      "indexed:use_crystal_globe"
+    ]
+  },
+  "harvest_crystal_globe": {
+    "subtitle": "subtitles.indexed.harvest_crystal_globe",
+    "sounds": [
+      "indexed:harvest_crystal_globe"
+    ]
+  },
+  "crystal_globe_ambient": {
+    "subtitle": "subtitles.indexed.crystal_globe_ambient",
+    "sounds": [
+      "indexed:crystal_globe_ambient_1",
+      "indexed:crystal_globe_ambient_2"
+    ]
+  }
+}

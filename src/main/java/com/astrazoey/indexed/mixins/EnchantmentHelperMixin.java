@@ -9,6 +9,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.EnchantmentScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -21,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
+import java.util.Random;
 
 import static java.lang.Math.min;
 
@@ -30,16 +32,48 @@ public class EnchantmentHelperMixin {
     //Prevents enchantments such as slow burn from being applied to armor in loot
 
     private static ThreadLocal<ItemStack> itemType = new ThreadLocal<ItemStack>();
+    private static ThreadLocal<ItemStack> generatedItemType = new ThreadLocal<ItemStack>();
 
     @Inject(method = "getPossibleEntries", at = @At(value="INVOKE", target = "Lnet/minecraft/item/ItemStack;getItem()Lnet/minecraft/item/Item;"))
     private static void getItem(int power, ItemStack stack, boolean treasureAllowed, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
         itemType.set(stack);
     }
 
-    @Redirect(method = "getPossibleEntries", at = @At(value="INVOKE", target = "Lnet/minecraft/enchantment/Enchantment;isAvailableForRandomSelection()Z"))
-    private static boolean denyIncompatibleEntries(Enchantment enchantment) {
+
+    @Inject(method = "generateEnchantments", at = @At(value = "HEAD"))
+    private static void getItemStack(Random random, ItemStack stack, int level, boolean treasureAllowed, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
+        generatedItemType.set(stack);
+    }
+
+    @ModifyConstant(method = "generateEnchantments", constant = @Constant(intValue = 50, ordinal = 0))
+    private static int increaseGoldBookEffectiveness(int constant) {
+        if(generatedItemType.get().isOf(IndexedItems.GOLD_BOUND_BOOK)) {
+            return 25;
+        } else {
+            return constant;
+        }
+    }
+
+    @Redirect(method = "getPossibleEntries", at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/Enchantment;isAvailableForRandomSelection()Z"))
+    private static boolean checkAcceptableEnchantments(Enchantment enchantment) {
+
         EnchantingAcceptability acceptabilityTest = new EnchantingAcceptability();
-        return acceptabilityTest.checkAcceptability(enchantment, itemType);
+        //return acceptabilityTest.checkAcceptability(enchantment, itemType);
+
+
+
+        if(itemType.get().isOf(IndexedItems.GOLD_BOUND_BOOK)) {
+            if(enchantment.getRarity() == Enchantment.Rarity.COMMON) {
+                System.out.println("Excluded enchantment: " + enchantment);
+                return false;
+            }
+        }
+
+        if(acceptabilityTest.acceptableCheck(enchantment, itemType.get())) {
+            return enchantment.isAvailableForRandomSelection();
+        }
+
+        return false;
     }
 
 }
@@ -71,6 +105,13 @@ class TakeEnchantment {
         } catch (NullPointerException e) {
             effectLevel.set(0);
         }
+
+        if(effectLevel.get() > 0) {
+            if(playerEntity instanceof ServerPlayerEntity) {
+                Indexed.ENCHANTED_ADVANCEMENT.trigger((ServerPlayerEntity) playerEntity);
+            }
+        }
+
     }
 
     //Take Enchanted Status Effect Into Account
@@ -88,9 +129,9 @@ class TakeEnchantment {
     public void enchantedStatusEffectBook(ItemStack stack, EnchantmentLevelEntry entry) {
         if(effectLevel != null) {
             EnchantmentLevelEntry newEntry = new EnchantmentLevelEntry(entry.enchantment, min(entry.level + effectLevel.get(), entry.enchantment.getMaxLevel()));
-            stack.addEnchantment(newEntry.enchantment, newEntry.level);
+            EnchantedBookItem.addEnchantment(stack, newEntry);
         } else {
-            stack.addEnchantment(entry.enchantment, entry.level);
+            EnchantedBookItem.addEnchantment(stack, entry);
         }
     }
 

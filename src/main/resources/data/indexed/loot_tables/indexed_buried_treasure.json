@@ -30,7 +30,7 @@
             {
               "function": "enchant_randomly",
               "enchantments": [
-                "minecraft:channelling"
+                "minecraft:channeling"
               ]
             }
           ]

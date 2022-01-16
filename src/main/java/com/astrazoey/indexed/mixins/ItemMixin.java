@@ -109,6 +109,11 @@ class ItemStackMixin {
 
                 list.add(mutableText);
             }
+
+            if(EnchantmentHelper.getLevel(Indexed.MYSTERY_CURSE, ((ItemStack) (Object) this)) > 0) {
+                list.add(new TranslatableText("enchantment.indexed.mystery_tooltip").formatted(Formatting.OBFUSCATED, Formatting.RED));
+            }
+
         }
     }
 

@@ -1,0 +1,60 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"ambientocclusion": false,
+	"textures": {
+		"particle": "indexed:block/crystal_globe_particle",
+		"1": "indexed:block/crystal_globe_stand",
+		"2": "indexed:block/crystal_globe_base",
+		"5": "indexed:block/crystal_globe_glass_3"
+	},
+	"elements": [
+		{
+			"name": "base",
+			"from": [2, 0, 2],
+			"to": [14, 2, 14],
+			"faces": {
+				"north": {"uv": [2, 13, 14, 15], "texture": "#1"},
+				"east": {"uv": [2, 13, 14, 15], "texture": "#1"},
+				"south": {"uv": [2, 13, 14, 15], "texture": "#1"},
+				"west": {"uv": [2, 13, 14, 15], "texture": "#1"},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#2"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#2"}
+			}
+		},
+		{
+			"name": "glass",
+			"from": [3, 4, 3],
+			"to": [13, 14, 13],
+			"faces": {
+				"north": {"uv": [3, 3, 13, 13], "texture": "#5"},
+				"east": {"uv": [3, 3, 13, 13], "texture": "#5"},
+				"south": {"uv": [3, 3, 13, 13], "texture": "#5"},
+				"west": {"uv": [3, 3, 13, 13], "texture": "#5"},
+				"up": {"uv": [3, 3, 13, 13], "texture": "#5"},
+				"down": {"uv": [3, 3, 13, 13], "texture": "#5"}
+			}
+		},
+		{
+			"name": "stand",
+			"from": [6, 2, 6],
+			"to": [10, 4, 10],
+			"faces": {
+				"north": {"uv": [6, 11, 10, 13], "texture": "#1"},
+				"east": {"uv": [6, 11, 10, 13], "texture": "#1"},
+				"south": {"uv": [6, 11, 10, 13], "texture": "#1"},
+				"west": {"uv": [6, 11, 10, 13], "texture": "#1"},
+				"up": {"uv": [4, 4, 8, 8], "texture": "#2"},
+				"down": {"uv": [4, 4, 8, 8], "texture": "#2"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "crystal_globe_2",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2]
+		}
+	]
+}

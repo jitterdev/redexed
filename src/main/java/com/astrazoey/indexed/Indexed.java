@@ -7,6 +7,7 @@ import com.astrazoey.indexed.mixins.CriterionRegistryAccessor;
 import com.astrazoey.indexed.registry.IndexedItems;
 import com.astrazoey.indexed.status_effects.EnchantedStatusEffect;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -14,10 +15,12 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.fabricmc.fabric.api.object.builder.v1.advancement.CriterionRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.SharedConstants;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
+import net.minecraft.block.*;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.block.BlockModelRenderer;
+import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.effect.StatusEffect;
@@ -26,8 +29,10 @@ import net.minecraft.item.*;
 import net.minecraft.loot.*;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
@@ -94,10 +99,23 @@ public class Indexed implements ModInitializer {
             of(Material.AMETHYST).
             strength(1.5f).
             hardness(1.5f).
-            luminance(3).
+            luminance(CrystalGlobeBlock.STATE_TO_LUMINANCE).
             sounds(BlockSoundGroup.AMETHYST_BLOCK).
-            breakByHand(true)
+            breakByHand(true).
+            nonOpaque()
     );
+
+    //Sounds
+    public static final Identifier CRYSTAL_USE_SOUND = new Identifier("indexed","use_crystal_globe");
+    public static SoundEvent CRYSTAL_USE_SOUND_EVENT = new SoundEvent(CRYSTAL_USE_SOUND);
+    public static final Identifier CRYSTAL_HARVEST_SOUND = new Identifier("indexed","harvest_crystal_globe");
+    public static SoundEvent CRYSTAL_HARVEST_SOUND_EVENT = new SoundEvent(CRYSTAL_HARVEST_SOUND);
+    public static final Identifier CRYSTAL_AMBIENT_SOUND = new Identifier("indexed","crystal_globe_ambient");
+    public static SoundEvent CRYSTAL_AMBIENT_SOUND_EVENT = new SoundEvent(CRYSTAL_AMBIENT_SOUND);
+
+    //Particles
+    public static final DefaultParticleType CRYSTAL_HARVEST = FabricParticleTypes.simple();
+    public static final DefaultParticleType CRYSTAL_BREAK = FabricParticleTypes.simple();
 
     //Status Effects
     public static final StatusEffect ENCHANTED_STATUS_EFFECT = new EnchantedStatusEffect(StatusEffectCategory.BENEFICIAL, 0xD400FF);
@@ -123,6 +141,9 @@ public class Indexed implements ModInitializer {
     public static MultishotCrossbowCriterion MULTISHOT_CROSSBOW = new MultishotCrossbowCriterion();
     public static MaxGoldCriterion MAX_GOLD = new MaxGoldCriterion();
     public static MaxKnockbackCriterion MAX_KNOCKBACK = new MaxKnockbackCriterion();
+    public static UseCrystalGlobeCriterion USE_CRYSTAL_GLOBE = new UseCrystalGlobeCriterion();
+    public static FillCrystalGlobeCriterion FILL_CRYSTAL_GLOBE = new FillCrystalGlobeCriterion();
+    public static EnchantedCriterion ENCHANTED_ADVANCEMENT = new EnchantedCriterion();
 
 
 
@@ -132,12 +153,23 @@ public class Indexed implements ModInitializer {
         IndexedItems.registerItems();
 
         //Blocks
-        Registry.register(Registry.BLOCK, new Identifier("indexed", "crystal_globe"), CRYSTAL_GLOBE);
-        Registry.register(Registry.ITEM, new Identifier("indexed", "crystal_globe"), new BlockItem(CRYSTAL_GLOBE, new FabricItemSettings().group(ItemGroup.MISC)));
+        Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "crystal_globe"), CRYSTAL_GLOBE);
+        Registry.register(Registry.ITEM, new Identifier(MOD_ID, "crystal_globe"), new BlockItem(CRYSTAL_GLOBE, new FabricItemSettings().group(ItemGroup.MISC)));
+
+        BlockRenderLayerMap.INSTANCE.putBlock(CRYSTAL_GLOBE, RenderLayer.getCutout());
+
+        //Sounds
+        Registry.register(Registry.SOUND_EVENT, CRYSTAL_USE_SOUND, CRYSTAL_USE_SOUND_EVENT);
+        Registry.register(Registry.SOUND_EVENT, CRYSTAL_HARVEST_SOUND, CRYSTAL_HARVEST_SOUND_EVENT);
+        Registry.register(Registry.SOUND_EVENT, CRYSTAL_AMBIENT_SOUND, CRYSTAL_AMBIENT_SOUND_EVENT);
+
+        //Particles
+        Registry.register(Registry.PARTICLE_TYPE, new Identifier(MOD_ID, "crystal_harvest"), CRYSTAL_HARVEST);
+        Registry.register(Registry.PARTICLE_TYPE, new Identifier(MOD_ID, "crystal_break"), CRYSTAL_BREAK);
 
 
         //Status Effects
-        Registry.register(Registry.STATUS_EFFECT, new Identifier("indexed", "enchanted"), ENCHANTED_STATUS_EFFECT);
+        Registry.register(Registry.STATUS_EFFECT, new Identifier(MOD_ID, "enchanted"), ENCHANTED_STATUS_EFFECT);
 
         //Criterion Registration
         CriterionRegistryAccessor.registerCriterion(OVERCHARGE_ITEM);
@@ -147,6 +179,10 @@ public class Indexed implements ModInitializer {
         CriterionRegistryAccessor.registerCriterion(MULTISHOT_CROSSBOW);
         CriterionRegistryAccessor.registerCriterion(MAX_GOLD);
         CriterionRegistryAccessor.registerCriterion(MAX_KNOCKBACK);
+        CriterionRegistryAccessor.registerCriterion(USE_CRYSTAL_GLOBE);
+        CriterionRegistryAccessor.registerCriterion(FILL_CRYSTAL_GLOBE);
+        CriterionRegistryAccessor.registerCriterion(ENCHANTED_ADVANCEMENT);
+
 
         //Ores Drop Experience
         SetOreExperience.set(Blocks.COPPER_ORE, UniformIntProvider.create(1,3));
@@ -222,58 +258,6 @@ public class Indexed implements ModInitializer {
             }
         }));
 
-        //Crystal Usage
-        /*
-        UseBlockCallback.EVENT.register((player, world, hand, hitresult) -> {
-            var pos = hitresult.getBlockPos();
-            var block = world.getBlockState(pos);
-            if((block.isOf(Blocks.AMETHYST_CLUSTER)) && (player.getStackInHand(hand).hasEnchantments() || player.getStackInHand(hand).isOf(Items.ENCHANTED_BOOK))) {
-                ItemStack heldItem = player.getStackInHand(hand);
-                Map<Enchantment, Integer> enchantmentIntegerMap = EnchantmentHelper.get(heldItem);
-                Map<Enchantment, Integer> newEnchantingMap = EnchantmentHelper.get(heldItem);
-                newEnchantingMap.clear();
-
-                for(Enchantment i : enchantmentIntegerMap.keySet()) {
-                    int enchantmentLevel = enchantmentIntegerMap.get(i);
-                    enchantmentLevel--;
-                    System.out.println("Enchantment level = " + enchantmentLevel);
-                    if(enchantmentLevel <= 0) {
-                        System.out.println("Removing enchantment" + i);
-                        //enchantmentIntegerMap.remove(i);
-
-                    } else {
-                        System.out.println("Reducing enchantment " + i);
-                        //enchantmentIntegerMap.put(i,enchantmentLevel);
-                        newEnchantingMap.put(i,enchantmentLevel);
-                    }
-                }
-
-                EnchantmentHelper.set(newEnchantingMap, heldItem);
-                if(heldItem.isOf(Items.ENCHANTED_BOOK)) {
-                    NbtList nbtList = EnchantedBookItem.getEnchantmentNbt(heldItem);
-                    nbtList.clear();
-                    for(Enchantment i : newEnchantingMap.keySet()) {
-                        Identifier identifier = EnchantmentHelper.getEnchantmentId(i);
-                        nbtList.add(EnchantmentHelper.createNbt(identifier, newEnchantingMap.get(i)));
-                    }
-                    heldItem.getOrCreateNbt().put("StoredEnchantments", nbtList);
-                    if(heldItem.getNbt() != null) {
-                        if (heldItem.getNbt().getList("StoredEnchantments", 10).isEmpty()) {
-                            ItemStack newItem = Items.BOOK.getDefaultStack();
-                            newItem.setNbt(heldItem.getNbt());
-                            player.setStackInHand(hand, newItem);
-                        }
-                    }
-
-                }
-
-                world.playSound(null, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1f, 1.5f);
-                return ActionResult.SUCCESS;
-            } else {
-                return ActionResult.PASS;
-            }
-        });
-        */
 
         //Registers Config
         Identifier identifier = new Identifier(MOD_ID);

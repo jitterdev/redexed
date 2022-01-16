@@ -6,7 +6,6 @@ Key Points:
  4. Villagers no longer sell enchantments you can get from an enchanting table.
  5. Repairing costs zero experience when using materials, the amount of materials required scales with the amount of enchantments on the items.
 
-
 Changes:
  - Increased enchantments level to 5 for everything possible. Exception of Silk Touch, Channeling, Infinity, and Curses.
  - Removed mutually exclusive enchantments with the exception of Fortune + Silk Touch
@@ -18,6 +17,11 @@ Changes:
  - Villagers can only trade treasure, & curses. ie: Things you cannot get on an enchanting table.
  - Mending is no longer considered a treasure and is a rare enchantment found in the enchanting table.
  - Silk Touch is now "RARE" instead of "VERY RARE".
+ - Multishot is now "VERY RARE" instead of "RARE"
+ - Quick Charge is now "RARE" instead of "UNCOMMON"
+ - Piercing is now "UNCOMMON" instead of "RARE"
+ - Loyalty is now "RARE" instead of "UNCOMMON"
+ - Impaling is now "UNCOMMON" instead of "RARE"
  - Nerfed Quick Draw, Sharpness, Knockback, Punch, and Protection (to adjust for level 5 enchantments).
  - Added repair items to tools that don't normally have them (tridents, bows, crossbows, fishing rods, etc).
  - Config included which lets you set max enchantment caps and repair costs for items - including modded items.
@@ -25,7 +29,9 @@ Changes:
  - Riptide is compatible with Loyalty. The Loyalty effect takes place in dry circumstances.
  - Riptide is compatible with channeling, so you can summon lightning on impact.
  - Riptide Tridents are thrown farther than usual (when used in dry contexts).
+ - Impaling Tridents will now do extra damage to any mob that is touching rain or water.
  - Experience retrieved on death is no longer capped at 7 levels.
+ - Enchanted Books can now be found in various structures related to the enchantment. Eg: mining enchantments like fortune, silk touch can be found in Mineshafts
 
 New Stuff:
  - New "Slow Burn" enchantment for the Elytra which slows down firework velocity but greatly increases their duration.
@@ -34,18 +40,25 @@ New Stuff:
  - New "Keeping" enchantment which has a 60%-100% chance of letting you keep the item after death. Keeping V is 100% but uses up 5 slots so consider this carefully.
  - New "Curse of the Hidden" which makes the item invisible when viewed in first or third person. It still appears on the ground and in the gui.
  - New "Curse of Mystery" that can be applied to loot which hides enchantments.
- - New "Gold Bound Book" that's crafted with gold and has extremely high enchantability compared to a regular book.
+ - New "Gilded Book" that's crafted with gold and has extremely high enchantability compared to a regular book. It excludes common enchantments.
  - New "Essence" enchantment that only appears in loot on a gold bound book. This enchantment provides a lot of experience when used in a grindstone.
+ - New "Crystal Globe" block that that decrements enchantment levels.
+ - When the Crystal Globe is fed enough levels and given an amethyst shard, it will grant the player the "Enchanted" status effect and some experience.
+ - The Crystal Globe is more efficient when surrounded by amethyst clusters, but using the Globe can destroy the surrounding clusters.
+ - New "Enchanted" status effect that boosts enchanting power by 1 level.
 
 Planned:
  - //TODO: Curse of Deceit: Item lies about its durability.
  - //TODO: "Reeling" enchantment for fishing rods which allows the line to be cast further.
- - //TODO: Make a way to ween off enchantments
+ - //TODO: Make textures for the Crystal Particle Effect
+ - //TODO: Make sounds for the Crystal
+ - //TODO: Add Monky's new Enchanted texture
  - //TODO: Nerf Fortune V
- - //FIXME: Anvil allows Overcharged crafting when "AnvilImprovementsEnabled" set to true.
+ - //TODO: Investigate Gold Bound Book's exclusion of common enchantments
+ - //FIXME: Anvil allows Overcharged crafting when Charm's "AnvilImprovementsEnabled" set to true.
  - //FIXME: Keeping enchantment does nothing when Charm's "Totem of Preserving" set to true.
+ - //FIXME: Address the Crystal Globe's missing particle texture
 
 Things to think about:
  - //Think: Fortune and Silk Touch are mutex
  - //Think: Think of some more enchantments + curses
- - //Think: A way to remove one enchantment at a time from a tool?

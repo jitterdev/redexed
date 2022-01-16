@@ -159,7 +159,7 @@ public class AnvilScreenHandlerMixin {
 
 }
 
-@Mixin(AnvilScreen.class)
+@Mixin(value = AnvilScreen.class, priority = 999)
 class AnvilScreenMixin {
 
     ItemStack itemStack;
