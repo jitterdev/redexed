@@ -25,6 +25,9 @@ public class EnchantingTypes {
 
     //Modded Types
     public static final EnchantingType ELYTRA_MODIFIED;
+    public static final EnchantingType ROSE_GOLD_TIER;
+    public static final EnchantingType NETHERITE_GILDED;
+    public static final EnchantingType BONE_TIER;
 
     //Better End Types
     public static final EnchantingType TERMINITE;
@@ -37,14 +40,11 @@ public class EnchantingTypes {
     public static final EnchantingType CINCINNASITE;
     public static final EnchantingType CINCINNASITE_DIAMOND;
 
-    //AdventureZ Types
-    public static final EnchantingType NETHERITE_GILDED;
-
     //Dragon Loot Types
     public static final EnchantingType DRAGON;
 
-
-
+    //Conjuring Types
+    public static final EnchantingType SOUL_ALLOY;
 
     static {
         GENERIC = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(5).repairScaling(1f));
@@ -72,6 +72,9 @@ public class EnchantingTypes {
 
         //Modded Support
         ELYTRA_MODIFIED = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(5).repairScaling(1f));
+        ROSE_GOLD_TIER = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(18).repairScaling(0.5f));
+        BONE_TIER = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(5).repairScaling(1f));
+        NETHERITE_GILDED = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(12).repairScaling(0.3f));
 
         //Better End Support
         AETERNIUM = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(8).repairScaling(1f));
@@ -84,12 +87,11 @@ public class EnchantingTypes {
         CINCINNASITE = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(8).repairScaling(1f));
         CINCINNASITE_DIAMOND = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(8).repairScaling(2f));
 
-        //AdventureZ Support
-        NETHERITE_GILDED = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(8).repairScaling(0.5f));
-
         //Dragon Loot Support
         DRAGON = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(8).repairScaling(1f));
 
+        //Conjuring Support
+        SOUL_ALLOY = new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(15).repairScaling(1f));
     }
 
 }
