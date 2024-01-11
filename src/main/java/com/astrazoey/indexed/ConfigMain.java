@@ -33,6 +33,9 @@ public class ConfigMain {
     public static final String MENDING_IS_TREASURE_KEY = "mending-is-treasure";
     public static boolean mendingIsTreasure = false;
 
+    public static final String EXP_CURSE_OVERHAUL_KEY = "experimental-curse-overhaul";
+    public static boolean experimentalCurseOverhaul = true;
+
     public static void save() {
         Properties props = new Properties();
         read(props);
@@ -100,6 +103,7 @@ public class ConfigMain {
         props.setProperty(ENABLE_VILLAGER_NERFS_KEY, String.valueOf(enableVillagerNerfs));
         props.setProperty(ENABLE_QUICK_FLIGHT_KEY, String.valueOf(enableQuickFlight));
         props.setProperty(MENDING_IS_TREASURE_KEY, String.valueOf(mendingIsTreasure));
+        props.setProperty(EXP_CURSE_OVERHAUL_KEY, String.valueOf(experimentalCurseOverhaul));
     }
 
     public static void assign(Properties props) {
@@ -109,6 +113,7 @@ public class ConfigMain {
         enableVillagerNerfs = defaultBoolean(props.getProperty(ENABLE_VILLAGER_NERFS_KEY), true);
         enableQuickFlight = defaultBoolean(props.getProperty(ENABLE_QUICK_FLIGHT_KEY), false);
         mendingIsTreasure = defaultBoolean(props.getProperty(MENDING_IS_TREASURE_KEY), false);
+        experimentalCurseOverhaul = defaultBoolean(props.getProperty(EXP_CURSE_OVERHAUL_KEY), true);
     }
 
     private static boolean defaultBoolean(String bool, boolean defaultOption) {

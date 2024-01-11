@@ -6,7 +6,7 @@
   "name": "Indexed",
   "description": "Anvil and Enchanting Revamp",
   "authors": [
-    "Astrazoey"
+    "Jitter, Astrazoey"
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/indexed",
@@ -30,9 +30,9 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.11.3",
+    "fabricloader": ">=0.14.22",
     "fabric": "*",
-    "minecraft": "1.18.x",
+    "minecraft": "1.20.1",
     "java": ">=17"
   },
   "suggests": {

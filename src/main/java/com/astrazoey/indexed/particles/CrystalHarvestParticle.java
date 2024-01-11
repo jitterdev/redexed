@@ -16,7 +16,7 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
 
 @Environment(EnvType.CLIENT)
-public class CrystalHarvestParticle  extends AnimatedParticle {
+public class CrystalHarvestParticle extends AnimatedParticle {
 
     public static final ParticleTextureSheet PARTICLE_SHEET_TRANSLUCENT_ADDITIVE = new ParticleTextureSheet() {
         @Override

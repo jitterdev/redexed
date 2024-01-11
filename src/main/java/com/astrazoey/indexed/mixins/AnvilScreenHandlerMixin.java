@@ -1,28 +1,33 @@
 package com.astrazoey.indexed.mixins;
 
+import com.astrazoey.indexed.ConfigMain;
 import com.astrazoey.indexed.EnchantingAcceptability;
 import com.astrazoey.indexed.Indexed;
 import com.astrazoey.indexed.MaxEnchantingSlots;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.AnvilScreen;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.registry.Registries;
 import net.minecraft.screen.AnvilScreenHandler;
 import net.minecraft.screen.Property;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.*;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import net.minecraft.text.TranslatableTextContent;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = AnvilScreenHandler.class, priority = 999)
@@ -101,6 +106,16 @@ public class AnvilScreenHandlerMixin {
 
     @ModifyConstant(method="canTakeOutput", constant = @Constant(expandZeroConditions = {Constant.Condition.GREATER_THAN_ZERO}))
     public int allowAnyCostForOutput(int cost) {
+        if (itemStack3.getItem() instanceof EnchantedBookItem && ConfigMain.experimentalCurseOverhaul) {
+            for (NbtElement enchant : EnchantedBookItem.getEnchantmentNbt(itemStack3)) {
+                Identifier identifier = EnchantmentHelper.getIdFromNbt((NbtCompound) enchant);
+                Enchantment enchantment = Registries.ENCHANTMENT.get(identifier);
+                if (!enchantment.isCursed()) {
+                    return 50000;
+                }
+            }
+            return -1;
+        }
         if(overcharged) {
             return 50000; //prevent taking out overcharged items
         }
@@ -173,18 +188,17 @@ class AnvilScreenMixin {
     }
 
     //update text
-    @Redirect(method = "drawForeground", at = @At(value="INVOKE", target = "Lnet/minecraft/client/font/TextRenderer;drawWithShadow(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/text/Text;FFI)I"))
-    public int setText(TextRenderer textRenderer, MatrixStack matrices, Text text, float x, float y, int color) {
+    @Redirect(method = "drawForeground", at = @At(value="INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawTextWithShadow(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/text/Text;III)I"))
+    public int setText(DrawContext context, TextRenderer textRenderer, Text text, int x, int y, int color) {
 
         if(MaxEnchantingSlots.getEnchantType(itemStack) != null) {
             if(MaxEnchantingSlots.getEnchantType(itemStack).getMaxEnchantingSlots() < MaxEnchantingSlots.getCurrent(itemStack)) {
-                text = new TranslatableText("container.indexed.overcharged");
-                String textString = text.getString();
-                x = x + 100 - textRenderer.getWidth(textString);
+                text = Text.translatable("container.indexed.overcharged");
+                x = x + 100 - textRenderer.getWidth(text.getString());
             }
         }
 
-        return textRenderer.drawWithShadow(matrices, (Text)text, (float)x, 69.0F, color);
+        return context.drawTextWithShadow(textRenderer, text.getString(), x, 69, color);
     }
 
 }

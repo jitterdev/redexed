@@ -7,10 +7,10 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.Item;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -95,7 +95,7 @@ public class Config {
             ThreadLocal<Identifier> localItemIdentifier = new ThreadLocal<Identifier>();
             localItemIdentifier.set(itemIdentifier);
 
-            Item registerItem = Registry.ITEM.get(localItemIdentifier.get());
+            Item registerItem = Registries.ITEM.get(localItemIdentifier.get());
 
 
             MaxEnchantingSlots.setEnchantType(registerItem, new EnchantingType(new EnchantingType.Settings().maxEnchantingSlots(maxSlots).repairScaling(repairScale)));
@@ -449,6 +449,12 @@ public class Config {
         defaultConfig.put("farmersdelight:diamond_knife", EnchantingTypes.DIAMOND_TIER.getEnchantabilityConfig());
         defaultConfig.put("farmersdelight:netherite_knife", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
 
+        // Nether's Delight
+        defaultConfig.put("nethersdelight:iron_machete", EnchantingTypes.IRON_TIER.getEnchantabilityConfig());
+        defaultConfig.put("nethersdelight:golden_machete", EnchantingTypes.GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("nethersdelight:diamond_machete", EnchantingTypes.DIAMOND_TIER.getEnchantabilityConfig());
+        defaultConfig.put("nethersdelight:netherite_machete", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+
         //Consistency+
         defaultConfig.put("consistency_plus:turtle_chestplate", EnchantingTypes.TURTLE_HELMET.getEnchantabilityConfig());
         defaultConfig.put("consistency_plus:turtle_leggings", EnchantingTypes.TURTLE_HELMET.getEnchantabilityConfig());
@@ -565,6 +571,438 @@ public class Config {
         defaultConfig.put("conjuring:soul_alloy_shovel", EnchantingTypes.SOUL_ALLOY.getEnchantabilityConfig());
         defaultConfig.put("conjuring:soul_alloy_hatchet", EnchantingTypes.SOUL_ALLOY.getEnchantabilityConfig());
         defaultConfig.put("conjuring:soul_alloy_pickaxe", EnchantingTypes.SOUL_ALLOY.getEnchantabilityConfig());
+
+        // Mythic Metals
+        defaultConfig.put("mythicmetals:adamantite_sword", EnchantingTypes.ADAMANTITE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:adamantite_axe", EnchantingTypes.ADAMANTITE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:adamantite_shovel", EnchantingTypes.ADAMANTITE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:adamantite_hoe", EnchantingTypes.ADAMANTITE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:adamantite_pickaxe", EnchantingTypes.ADAMANTITE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:adamantite_helmet", EnchantingTypes.ADAMANTITE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:adamantite_chestplate", EnchantingTypes.ADAMANTITE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:adamantite_leggings", EnchantingTypes.ADAMANTITE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:adamantite_boots", EnchantingTypes.ADAMANTITE.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:aquarium_sword", EnchantingTypes.AQUARIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:aquarium_axe", EnchantingTypes.AQUARIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:aquarium_shovel", EnchantingTypes.AQUARIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:aquarium_hoe", EnchantingTypes.AQUARIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:aquarium_pickaxe", EnchantingTypes.AQUARIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:aquarium_helmet", EnchantingTypes.AQUARIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:aquarium_chestplate", EnchantingTypes.AQUARIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:aquarium_leggings", EnchantingTypes.AQUARIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:aquarium_boots", EnchantingTypes.AQUARIUM.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:tidesinger_sword", EnchantingTypes.TIDESINGER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:tidesinger_axe", EnchantingTypes.TIDESINGER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:tidesinger_shovel", EnchantingTypes.TIDESINGER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:tidesinger_hoe", EnchantingTypes.TIDESINGER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:tidesinger_pickaxe", EnchantingTypes.TIDESINGER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:tidesinger_helmet", EnchantingTypes.TIDESINGER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:tidesinger_chestplate", EnchantingTypes.TIDESINGER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:tidesinger_leggings", EnchantingTypes.TIDESINGER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:tidesinger_boots", EnchantingTypes.TIDESINGER.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:banglum_sword", EnchantingTypes.BANGLUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:banglum_axe", EnchantingTypes.BANGLUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:banglum_shovel", EnchantingTypes.BANGLUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:banglum_hoe", EnchantingTypes.BANGLUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:banglum_pickaxe", EnchantingTypes.BANGLUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:banglum_helmet", EnchantingTypes.BANGLUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:banglum_chestplate", EnchantingTypes.BANGLUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:banglum_leggings", EnchantingTypes.BANGLUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:banglum_boots", EnchantingTypes.BANGLUM.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:bronze_sword", EnchantingTypes.BRONZE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:bronze_axe", EnchantingTypes.BRONZE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:bronze_shovel", EnchantingTypes.BRONZE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:bronze_hoe", EnchantingTypes.BRONZE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:bronze_pickaxe", EnchantingTypes.BRONZE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:bronze_helmet", EnchantingTypes.BRONZE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:bronze_chestplate", EnchantingTypes.BRONZE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:bronze_leggings", EnchantingTypes.BRONZE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:bronze_boots", EnchantingTypes.BRONZE.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:carmot_sword", EnchantingTypes.CARMOT.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:carmot_axe", EnchantingTypes.CARMOT.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:carmot_shovel", EnchantingTypes.CARMOT.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:carmot_hoe", EnchantingTypes.CARMOT.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:carmot_pickaxe", EnchantingTypes.CARMOT.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:carmot_helmet", EnchantingTypes.CARMOT.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:carmot_chestplate", EnchantingTypes.CARMOT.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:carmot_leggings", EnchantingTypes.CARMOT.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:carmot_boots", EnchantingTypes.CARMOT.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:celestium_sword", EnchantingTypes.CELESTIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:celestium_axe", EnchantingTypes.CELESTIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:celestium_shovel", EnchantingTypes.CELESTIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:celestium_hoe", EnchantingTypes.CELESTIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:celestium_pickaxe", EnchantingTypes.CELESTIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:celestium_helmet", EnchantingTypes.CELESTIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:celestium_chestplate", EnchantingTypes.CELESTIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:celestium_leggings", EnchantingTypes.CELESTIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:celestium_boots", EnchantingTypes.CELESTIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:celestium_elytra", EnchantingTypes.ELYTRA_MODIFIED.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:copper_sword", EnchantingTypes.COPPER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:copper_axe", EnchantingTypes.COPPER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:copper_shovel", EnchantingTypes.COPPER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:copper_hoe", EnchantingTypes.COPPER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:copper_pickaxe", EnchantingTypes.COPPER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:copper_helmet", EnchantingTypes.COPPER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:copper_chestplate", EnchantingTypes.COPPER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:copper_leggings", EnchantingTypes.COPPER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:copper_boots", EnchantingTypes.COPPER.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:durasteel_sword", EnchantingTypes.DURASTEEL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:durasteel_axe", EnchantingTypes.DURASTEEL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:durasteel_shovel", EnchantingTypes.DURASTEEL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:durasteel_hoe", EnchantingTypes.DURASTEEL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:durasteel_pickaxe", EnchantingTypes.DURASTEEL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:durasteel_helmet", EnchantingTypes.DURASTEEL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:durasteel_chestplate", EnchantingTypes.DURASTEEL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:durasteel_leggings", EnchantingTypes.DURASTEEL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:durasteel_boots", EnchantingTypes.DURASTEEL.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:hallowed_sword", EnchantingTypes.HALLOWED.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:hallowed_axe", EnchantingTypes.HALLOWED.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:hallowed_shovel", EnchantingTypes.HALLOWED.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:hallowed_hoe", EnchantingTypes.HALLOWED.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:hallowed_pickaxe", EnchantingTypes.HALLOWED.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:hallowed_helmet", EnchantingTypes.HALLOWED.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:hallowed_chestplate", EnchantingTypes.HALLOWED.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:hallowed_leggings", EnchantingTypes.HALLOWED.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:hallowed_boots", EnchantingTypes.HALLOWED.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:kyber_sword", EnchantingTypes.KYBER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:kyber_axe", EnchantingTypes.KYBER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:kyber_shovel", EnchantingTypes.KYBER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:kyber_hoe", EnchantingTypes.KYBER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:kyber_pickaxe", EnchantingTypes.KYBER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:kyber_helmet", EnchantingTypes.KYBER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:kyber_chestplate", EnchantingTypes.KYBER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:kyber_leggings", EnchantingTypes.KYBER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:kyber_boots", EnchantingTypes.KYBER.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:legendary_banglum_sword", EnchantingTypes.LEGENDARY_BANGLUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:legendary_banglum_axe", EnchantingTypes.LEGENDARY_BANGLUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:legendary_banglum_shovel", EnchantingTypes.LEGENDARY_BANGLUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:legendary_banglum_hoe", EnchantingTypes.LEGENDARY_BANGLUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:legendary_banglum_pickaxe", EnchantingTypes.LEGENDARY_BANGLUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:legendary_banglum_helmet", EnchantingTypes.LEGENDARY_BANGLUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:legendary_banglum_chestplate", EnchantingTypes.LEGENDARY_BANGLUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:legendary_banglum_leggings", EnchantingTypes.LEGENDARY_BANGLUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:legendary_banglum_boots", EnchantingTypes.LEGENDARY_BANGLUM.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:metallurgium_sword", EnchantingTypes.METALLURGIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:metallurgium_axe", EnchantingTypes.METALLURGIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:metallurgium_shovel", EnchantingTypes.METALLURGIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:metallurgium_hoe", EnchantingTypes.METALLURGIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:metallurgium_pickaxe", EnchantingTypes.METALLURGIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:metallurgium_helmet", EnchantingTypes.METALLURGIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:metallurgium_chestplate", EnchantingTypes.METALLURGIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:metallurgium_leggings", EnchantingTypes.METALLURGIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:metallurgium_boots", EnchantingTypes.METALLURGIUM.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:midas_gold_sword", EnchantingTypes.MIDAS_GOLD.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:midas_gold_axe", EnchantingTypes.MIDAS_GOLD.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:midas_gold_shovel", EnchantingTypes.MIDAS_GOLD.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:midas_gold_hoe", EnchantingTypes.MIDAS_GOLD.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:midas_gold_pickaxe", EnchantingTypes.MIDAS_GOLD.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:midas_gold_helmet", EnchantingTypes.MIDAS_GOLD.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:midas_gold_chestplate", EnchantingTypes.MIDAS_GOLD.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:midas_gold_leggings", EnchantingTypes.MIDAS_GOLD.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:midas_gold_boots", EnchantingTypes.MIDAS_GOLD.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:gilded_midas_gold_sword", EnchantingTypes.GILDED_MIDAS.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:royal_midas_gold_sword", EnchantingTypes.ROYAL_MIDAS.getEnchantabilityConfig());
+
+
+        defaultConfig.put("mythicmetals:mythril_sword", EnchantingTypes.MYTHRIL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:mythril_axe", EnchantingTypes.MYTHRIL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:mythril_shovel", EnchantingTypes.MYTHRIL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:mythril_hoe", EnchantingTypes.MYTHRIL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:mythril_pickaxe", EnchantingTypes.MYTHRIL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:mythril_helmet", EnchantingTypes.MYTHRIL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:mythril_chestplate", EnchantingTypes.MYTHRIL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:mythril_leggings", EnchantingTypes.MYTHRIL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:mythril_boots", EnchantingTypes.MYTHRIL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:mythril_drill", EnchantingTypes.MYTHRIL_DRILL.getEnchantabilityConfig());
+
+
+        defaultConfig.put("mythicmetals:orichalcum_sword", EnchantingTypes.ORICHALCUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:orichalcum_axe", EnchantingTypes.ORICHALCUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:orichalcum_shovel", EnchantingTypes.ORICHALCUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:orichalcum_hoe", EnchantingTypes.ORICHALCUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:orichalcum_pickaxe", EnchantingTypes.ORICHALCUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:orichalcum_helmet", EnchantingTypes.ORICHALCUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:orichalcum_chestplate", EnchantingTypes.ORICHALCUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:orichalcum_leggings", EnchantingTypes.ORICHALCUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:orichalcum_boots", EnchantingTypes.ORICHALCUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:orichalcum_hammer", EnchantingTypes.ORICHALCUM_HAMMER.getEnchantabilityConfig());
+
+
+        defaultConfig.put("mythicmetals:osmium_sword", EnchantingTypes.OSMIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:osmium_axe", EnchantingTypes.OSMIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:osmium_shovel", EnchantingTypes.OSMIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:osmium_hoe", EnchantingTypes.OSMIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:osmium_pickaxe", EnchantingTypes.OSMIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:osmium_helmet", EnchantingTypes.OSMIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:osmium_chestplate", EnchantingTypes.OSMIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:osmium_leggings", EnchantingTypes.OSMIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:osmium_boots", EnchantingTypes.OSMIUM.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:osmium_chainmail_helmet", EnchantingTypes.OSMIUM_CHAINMAIL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:osmium_chainmail_chestplate", EnchantingTypes.OSMIUM_CHAINMAIL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:osmium_chainmail_leggings", EnchantingTypes.OSMIUM_CHAINMAIL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:osmium_chainmail_boots", EnchantingTypes.OSMIUM_CHAINMAIL.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:palladium_sword", EnchantingTypes.PALLADIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:palladium_axe", EnchantingTypes.PALLADIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:palladium_shovel", EnchantingTypes.PALLADIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:palladium_hoe", EnchantingTypes.PALLADIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:palladium_pickaxe", EnchantingTypes.PALLADIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:palladium_helmet", EnchantingTypes.PALLADIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:palladium_chestplate", EnchantingTypes.PALLADIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:palladium_leggings", EnchantingTypes.PALLADIUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:palladium_boots", EnchantingTypes.PALLADIUM.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:prometheum_sword", EnchantingTypes.PROMETHEUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:prometheum_axe", EnchantingTypes.PROMETHEUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:prometheum_shovel", EnchantingTypes.PROMETHEUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:prometheum_hoe", EnchantingTypes.PROMETHEUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:prometheum_pickaxe", EnchantingTypes.PROMETHEUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:prometheum_helmet", EnchantingTypes.PROMETHEUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:prometheum_chestplate", EnchantingTypes.PROMETHEUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:prometheum_leggings", EnchantingTypes.PROMETHEUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:prometheum_boots", EnchantingTypes.PROMETHEUM.getEnchantabilityConfig());
+
+        EnchantabilityConfig quadrillumConfig = new EnchantabilityConfig(5, 2.0f);
+        defaultConfig.put("mythicmetals:quadrillum_sword", quadrillumConfig);
+        defaultConfig.put("mythicmetals:quadrillum_axe", quadrillumConfig);
+        defaultConfig.put("mythicmetals:quadrillum_shovel", quadrillumConfig);
+        defaultConfig.put("mythicmetals:quadrillum_hoe", quadrillumConfig);
+        defaultConfig.put("mythicmetals:quadrillum_pickaxe", quadrillumConfig);
+
+        defaultConfig.put("mythicmetals:runite_sword", EnchantingTypes.RUNITE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:runite_axe", EnchantingTypes.RUNITE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:runite_shovel", EnchantingTypes.RUNITE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:runite_hoe", EnchantingTypes.RUNITE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:runite_pickaxe", EnchantingTypes.RUNITE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:runite_helmet", EnchantingTypes.RUNITE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:runite_chestplate", EnchantingTypes.RUNITE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:runite_leggings", EnchantingTypes.RUNITE.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:runite_boots", EnchantingTypes.RUNITE.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:silver_helmet", EnchantingTypes.SILVER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:silver_chestplate", EnchantingTypes.SILVER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:silver_leggings", EnchantingTypes.SILVER.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:silver_boots", EnchantingTypes.SILVER.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:star_platinum_sword", EnchantingTypes.STAR_PLATINUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:star_platinum_axe", EnchantingTypes.STAR_PLATINUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:star_platinum_shovel", EnchantingTypes.STAR_PLATINUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:star_platinum_hoe", EnchantingTypes.STAR_PLATINUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:star_platinum_pickaxe", EnchantingTypes.STAR_PLATINUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:star_platinum_helmet", EnchantingTypes.STAR_PLATINUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:star_platinum_chestplate", EnchantingTypes.STAR_PLATINUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:star_platinum_leggings", EnchantingTypes.STAR_PLATINUM.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:star_platinum_boots", EnchantingTypes.STAR_PLATINUM.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:steel_sword", EnchantingTypes.STEEL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:steel_axe", EnchantingTypes.STEEL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:steel_shovel", EnchantingTypes.STEEL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:steel_hoe", EnchantingTypes.STEEL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:steel_pickaxe", EnchantingTypes.STEEL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:steel_helmet", EnchantingTypes.STEEL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:steel_chestplate", EnchantingTypes.STEEL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:steel_leggings", EnchantingTypes.STEEL.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:steel_boots", EnchantingTypes.STEEL.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:stormyx_sword", EnchantingTypes.STORMYX.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:stormyx_axe", EnchantingTypes.STORMYX.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:stormyx_shovel", EnchantingTypes.STORMYX.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:stormyx_hoe", EnchantingTypes.STORMYX.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:stormyx_pickaxe", EnchantingTypes.STORMYX.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:stormyx_helmet", EnchantingTypes.STORMYX.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:stormyx_chestplate", EnchantingTypes.STORMYX.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:stormyx_leggings", EnchantingTypes.STORMYX.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:stormyx_boots", EnchantingTypes.STORMYX.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:stormyx_shield", EnchantingTypes.STORMYX.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicmetals:red_aegis_sword", EnchantingTypes.RED_AEGIS_SWORD.getEnchantabilityConfig());
+        defaultConfig.put("mythicmetals:white_aegis_sword", EnchantingTypes.WHITE_AEGIS_SWORD.getEnchantabilityConfig());
+
+
+        // mythic upgrades
+        defaultConfig.put("mythicupgrades:jade_sword", EnchantingTypes.JADE.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:jade_axe", EnchantingTypes.JADE.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:jade_helmet", EnchantingTypes.JADE.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:jade_chestplate", EnchantingTypes.JADE.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:jade_leggings", EnchantingTypes.JADE.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:jade_boots", EnchantingTypes.JADE.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicupgrades:topaz_sword", EnchantingTypes.TOPAZ.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:topaz_axe", EnchantingTypes.TOPAZ.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:topaz_shovel", EnchantingTypes.TOPAZ.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:topaz_hoe", EnchantingTypes.TOPAZ.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:topaz_pickaxe", EnchantingTypes.TOPAZ.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:topaz_helmet", EnchantingTypes.TOPAZ.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:topaz_chestplate", EnchantingTypes.TOPAZ.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:topaz_leggings", EnchantingTypes.TOPAZ.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:topaz_boots", EnchantingTypes.TOPAZ.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicupgrades:aquamarine_sword", EnchantingTypes.AQUAMARINE.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:aquamarine_axe", EnchantingTypes.AQUAMARINE.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicupgrades:sapphire_sword", EnchantingTypes.SAPPHIRE.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:sapphire_axe", EnchantingTypes.SAPPHIRE.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:sapphire_helmet", EnchantingTypes.SAPPHIRE.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:sapphire_chestplate", EnchantingTypes.SAPPHIRE.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:sapphire_leggings", EnchantingTypes.SAPPHIRE.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:sapphire_boots", EnchantingTypes.SAPPHIRE.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicupgrades:ruby_sword", EnchantingTypes.RUBY.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:ruby_axe", EnchantingTypes.RUBY.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:ruby_shovel", EnchantingTypes.RUBY.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:ruby_hoe", EnchantingTypes.RUBY.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:ruby_pickaxe", EnchantingTypes.RUBY.getEnchantabilityConfig());
+
+        defaultConfig.put("mythicupgrades:ametrine_sword", EnchantingTypes.AMETRINE.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:ametrine_axe", EnchantingTypes.AMETRINE.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:ametrine_helmet", EnchantingTypes.AMETRINE.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:ametrine_chestplate", EnchantingTypes.AMETRINE.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:ametrine_leggings", EnchantingTypes.AMETRINE.getEnchantabilityConfig());
+        defaultConfig.put("mythicupgrades:ametrine_boots", EnchantingTypes.AMETRINE.getEnchantabilityConfig());
+
+
+        // aquamirae support
+        defaultConfig.put("aquamirae:terrible_sword", EnchantingTypes.TERRIBLE.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:fin_cutter", EnchantingTypes.TERRIBLE.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:terrible_helmet", EnchantingTypes.TERRIBLE.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:terrible_chestplate", EnchantingTypes.TERRIBLE.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:terrible_leggings", EnchantingTypes.TERRIBLE.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:terrible_boots", EnchantingTypes.TERRIBLE.getEnchantabilityConfig());
+
+        defaultConfig.put("aquamirae:divider", EnchantingTypes.BLINDING_ABYSS.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:whisper_of_the_abyss", EnchantingTypes.BLINDING_ABYSS.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:abyssal_heaume", EnchantingTypes.BLINDING_ABYSS.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:abyssal_brigantine", EnchantingTypes.BLINDING_ABYSS.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:abyssal_leggings", EnchantingTypes.BLINDING_ABYSS.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:abyssal_boots", EnchantingTypes.BLINDING_ABYSS.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:abyssal_tiara", EnchantingTypes.BLINDING_ABYSS.getEnchantabilityConfig());
+
+        defaultConfig.put("aquamirae:remnants_saber", EnchantingTypes.THREE_BOLT.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:poisoned_blade", EnchantingTypes.THREE_BOLT.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:three_bolt_helmet", EnchantingTypes.THREE_BOLT.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:three_bolt_suit", EnchantingTypes.THREE_BOLT.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:three_bolt_leggings", EnchantingTypes.THREE_BOLT.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:three_bolt_boots", EnchantingTypes.THREE_BOLT.getEnchantabilityConfig());
+
+        defaultConfig.put("aquamirae:coral_lance", EnchantingTypes.CORAL_LANCE.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:sweet_lance", EnchantingTypes.SWEET_LANCE.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:poisoned_chakra", EnchantingTypes.POISONED_CHAKRAM.getEnchantabilityConfig());
+        defaultConfig.put("aquamirae:maze_rose", EnchantingTypes.MAZE_ROSE.getEnchantabilityConfig());
+
+
+        // misc mods
+        defaultConfig.put("amarite:amarite_longsword", EnchantingTypes.AMARITE_LONGSWORD.getEnchantabilityConfig());
+
+
+        defaultConfig.put("winterly:cryomarble_sword", EnchantingTypes.CRYOMARBLE.getEnchantabilityConfig());
+        defaultConfig.put("winterly:cryomarble_axe", EnchantingTypes.CRYOMARBLE.getEnchantabilityConfig());
+        defaultConfig.put("winterly:cryomarble_shovel", EnchantingTypes.CRYOMARBLE.getEnchantabilityConfig());
+        defaultConfig.put("winterly:cryomarble_hoe", EnchantingTypes.CRYOMARBLE.getEnchantabilityConfig());
+        defaultConfig.put("winterly:cryomarble_pickaxe", EnchantingTypes.CRYOMARBLE.getEnchantabilityConfig());
+
+
+        defaultConfig.put("biomemakeover:cladded_helmet", EnchantingTypes.LEATHER_TIER.getEnchantabilityConfig());
+        defaultConfig.put("biomemakeover:cladded_chestplate", EnchantingTypes.LEATHER_TIER.getEnchantabilityConfig());
+        defaultConfig.put("biomemakeover:cladded_leggings", EnchantingTypes.LEATHER_TIER.getEnchantabilityConfig());
+        defaultConfig.put("biomemakeover:cladded_boots", EnchantingTypes.LEATHER_TIER.getEnchantabilityConfig());
+
+
+        defaultConfig.put("galosphere:sterling_helmet", EnchantingTypes.LEATHER_TIER.getEnchantabilityConfig());
+        defaultConfig.put("galosphere:sterling_chestplate", EnchantingTypes.LEATHER_TIER.getEnchantabilityConfig());
+        defaultConfig.put("galosphere:sterling_leggings", EnchantingTypes.LEATHER_TIER.getEnchantabilityConfig());
+        defaultConfig.put("galosphere:sterling_boots", EnchantingTypes.LEATHER_TIER.getEnchantabilityConfig());
+
+
+        defaultConfig.put("clutter:white_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:light_gray_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:gray_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:black_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:brown_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:red_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:orange_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:yellow_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:lime_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:green_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:cyan_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:light_blue_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:blue_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:purple_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:magenta_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:pink_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:crimson_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:warped_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+        defaultConfig.put("clutter:soul_butterfly_elytra", EnchantingTypes.ELYTRA.getEnchantabilityConfig());
+
+        defaultConfig.put("clutter:silver_helmet", EnchantingTypes.CHAINMAIL_TIER.getEnchantabilityConfig());
+        defaultConfig.put("clutter:silver_chestplate", EnchantingTypes.CHAINMAIL_TIER.getEnchantabilityConfig());
+        defaultConfig.put("clutter:silver_leggings", EnchantingTypes.CHAINMAIL_TIER.getEnchantabilityConfig());
+        defaultConfig.put("clutter:silver_boots", EnchantingTypes.CHAINMAIL_TIER.getEnchantabilityConfig());
+
+
+        defaultConfig.put("frostiful:fur_helmet", EnchantingTypes.LEATHER_TIER.getEnchantabilityConfig());
+        defaultConfig.put("frostiful:fur_chestplate", EnchantingTypes.LEATHER_TIER.getEnchantabilityConfig());
+        defaultConfig.put("frostiful:fur_leggings", EnchantingTypes.LEATHER_TIER.getEnchantabilityConfig());
+        defaultConfig.put("frostiful:fur_boots", EnchantingTypes.LEATHER_TIER.getEnchantabilityConfig());
+        defaultConfig.put("frostiful:ice_skates", EnchantingTypes.LEATHER_TIER.getEnchantabilityConfig());
+
+
+        defaultConfig.put("frostiful:fur_padded_chainmail_helmet", EnchantingTypes.CHAINMAIL_TIER.getEnchantabilityConfig());
+        defaultConfig.put("frostiful:fur_padded_chainmail_chestplate", EnchantingTypes.CHAINMAIL_TIER.getEnchantabilityConfig());
+        defaultConfig.put("frostiful:fur_padded_chainmail_leggings", EnchantingTypes.CHAINMAIL_TIER.getEnchantabilityConfig());
+        defaultConfig.put("frostiful:fur_padded_chainmail_boots", EnchantingTypes.CHAINMAIL_TIER.getEnchantabilityConfig());
+        defaultConfig.put("frostiful:armored_ice_skates", EnchantingTypes.CHAINMAIL_TIER.getEnchantabilityConfig());
+
+
+        defaultConfig.put("create:netherite_diving_helmet", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("create:netherite_diving_boots", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+
+        defaultConfig.put("create:copper_diving_helmet", EnchantingTypes.COPPER.getEnchantabilityConfig());
+        defaultConfig.put("create:copper_diving_boots", EnchantingTypes.COPPER.getEnchantabilityConfig());
+
+
+        defaultConfig.put("garnished:wooden_hatchet", EnchantingTypes.WOOD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("garnished:stone_hatchet", EnchantingTypes.STONE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("garnished:iron_hatchet", EnchantingTypes.IRON_TIER.getEnchantabilityConfig());
+        defaultConfig.put("garnished:golden_hatchet", EnchantingTypes.GOLD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("garnished:diamond_hatchet", EnchantingTypes.DIAMOND_TIER.getEnchantabilityConfig());
+        defaultConfig.put("garnished:netherite_hatchet", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("garnished:jade_hatchet", EnchantingTypes.JADE.getEnchantabilityConfig());
+        defaultConfig.put("garnished:topaz_hatchet", EnchantingTypes.TOPAZ.getEnchantabilityConfig());
+        defaultConfig.put("garnished:sapphire_hatchet", EnchantingTypes.SAPPHIRE.getEnchantabilityConfig());
+        defaultConfig.put("garnished:ruby_hatchet", EnchantingTypes.RUBY.getEnchantabilityConfig());
+        defaultConfig.put("garnished:ametrine_hatchet", EnchantingTypes.AMETRINE.getEnchantabilityConfig());
+        defaultConfig.put("garnished:aquamarine_hatchet", EnchantingTypes.AQUAMARINE.getEnchantabilityConfig());
+
+
+        defaultConfig.put("illagerinvasion:platinum_infused_hatchet", EnchantingTypes.IRON_TIER.getEnchantabilityConfig());
+
+
+        defaultConfig.put("guarding:netherite_shield", EnchantingTypes.SHIELD.getEnchantabilityConfig());
+
+
+        defaultConfig.put("crossbow_expansion:hand_crossbow", EnchantingTypes.CROSSBOW.getEnchantabilityConfig());
+        defaultConfig.put("crossbow_expansion:rage_crossbow", EnchantingTypes.CROSSBOW.getEnchantabilityConfig());
+        defaultConfig.put("crossbow_expansion:cluster_crossbow", EnchantingTypes.CROSSBOW.getEnchantabilityConfig());
+        defaultConfig.put("crossbow_expansion:pouch_crossbow", EnchantingTypes.CROSSBOW.getEnchantabilityConfig());
+        defaultConfig.put("crossbow_expansion:warden_crossbow", EnchantingTypes.CROSSBOW.getEnchantabilityConfig());
+
+
+
+
 
         File directory = configFile.getParentFile();
         if(directory.exists()) {

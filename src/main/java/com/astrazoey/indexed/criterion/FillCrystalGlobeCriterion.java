@@ -5,6 +5,7 @@ import net.minecraft.advancement.criterion.AbstractCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterionConditions;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
 import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
@@ -17,8 +18,8 @@ public class FillCrystalGlobeCriterion extends AbstractCriterion<FillCrystalGlob
         return ID;
     }
 
-    public FillCrystalGlobeCriterion.Conditions conditionsFromJson(JsonObject jsonObject, EntityPredicate.Extended player, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-        return new FillCrystalGlobeCriterion.Conditions(player);
+    public FillCrystalGlobeCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
+        return new FillCrystalGlobeCriterion.Conditions(playerPredicate);
     }
 
     public void trigger(ServerPlayerEntity player) {
@@ -30,12 +31,12 @@ public class FillCrystalGlobeCriterion extends AbstractCriterion<FillCrystalGlob
 
     public static class Conditions extends AbstractCriterionConditions {
 
-        public Conditions(EntityPredicate.Extended player) {
+        public Conditions(LootContextPredicate player) {
             super(FillCrystalGlobeCriterion.ID, player);
         }
 
         public static FillCrystalGlobeCriterion.Conditions create() {
-            return new FillCrystalGlobeCriterion.Conditions(EntityPredicate.Extended.EMPTY);
+            return new FillCrystalGlobeCriterion.Conditions(LootContextPredicate.EMPTY);
         }
 
         public boolean matches(ServerPlayerEntity player) {

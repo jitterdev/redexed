@@ -3,7 +3,6 @@ package com.astrazoey.indexed.mixins;
 import com.astrazoey.indexed.ConfigMain;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -24,7 +23,6 @@ class AquaAffinityEnchantmentMixin extends Enchantment {
     /**
      * @author Astrazoey
      */
-    @Overwrite
     public int getMaxLevel() {
         return 5;
     }
@@ -145,7 +143,6 @@ class FlameEnchantmentMixin extends Enchantment {
     /**
      * @author Astrazoey
      */
-    @Overwrite
     public int getMaxLevel() {
         return 5;
     }
@@ -181,7 +178,7 @@ class ImpalingEnchantmentMixin extends Enchantment {
     @Override
     public void onTargetDamaged(LivingEntity user, Entity target, int level) {
         if(target instanceof LivingEntity && target.isTouchingWaterOrRain()) {
-            DamageSource source = DamageSource.mob(user);
+            DamageSource source = user.getDamageSources().generic();
             target.damage(source, level*2);
         }
     }
@@ -300,7 +297,6 @@ class MendingEnchantmentMixin extends Enchantment {
     /**
      * @author Astrazoey
      */
-    @Overwrite
     public int getMaxLevel() {
         return 5;
     }
@@ -339,7 +335,6 @@ class MultishotEnchantmentMixin extends Enchantment {
     /**
      * @author Astrazoey
      */
-    @Overwrite
     public int getMaxLevel() {
         return 5;
     }

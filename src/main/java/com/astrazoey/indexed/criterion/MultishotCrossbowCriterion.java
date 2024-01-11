@@ -5,6 +5,7 @@ import net.minecraft.advancement.criterion.AbstractCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterionConditions;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
 import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
@@ -17,8 +18,8 @@ public class MultishotCrossbowCriterion extends AbstractCriterion<MultishotCross
         return ID;
     }
 
-    public MultishotCrossbowCriterion.Conditions conditionsFromJson(JsonObject jsonObject, EntityPredicate.Extended player, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-        return new MultishotCrossbowCriterion.Conditions(player);
+    public MultishotCrossbowCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
+        return new MultishotCrossbowCriterion.Conditions(playerPredicate);
     }
 
     public void trigger(ServerPlayerEntity player) {
@@ -30,12 +31,12 @@ public class MultishotCrossbowCriterion extends AbstractCriterion<MultishotCross
 
     public static class Conditions extends AbstractCriterionConditions {
 
-        public Conditions(EntityPredicate.Extended player) {
+        public Conditions(LootContextPredicate player) {
             super(MultishotCrossbowCriterion.ID, player);
         }
 
         public static MultishotCrossbowCriterion.Conditions create() {
-            return new MultishotCrossbowCriterion.Conditions(EntityPredicate.Extended.EMPTY);
+            return new MultishotCrossbowCriterion.Conditions(LootContextPredicate.EMPTY);
         }
 
         public boolean matches(ServerPlayerEntity player) {

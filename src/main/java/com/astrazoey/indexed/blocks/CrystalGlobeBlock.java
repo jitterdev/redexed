@@ -2,7 +2,6 @@ package com.astrazoey.indexed.blocks;
 
 import com.astrazoey.indexed.Indexed;
 import net.minecraft.block.*;
-import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.ai.pathing.NavigationType;
@@ -12,31 +11,25 @@ import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3d;
 
 import java.util.Map;
-import java.util.Random;
 import java.util.function.ToIntFunction;
 
 
@@ -121,7 +114,7 @@ public class CrystalGlobeBlock extends Block {
             }
 
             if(totalEnchants > 0) {
-                world.playSound(null, pos, Indexed.CRYSTAL_USE_SOUND_EVENT, SoundCategory.BLOCKS, 0.2f, 0.8f + world.getRandom().nextFloat(0.4f));
+                world.playSound(null, pos, Indexed.CRYSTAL_USE_SOUND_EVENT, SoundCategory.BLOCKS, 0.2f, 0.8f + world.getRandom().nextFloat() / 2.5f);
 
                 if(world instanceof ServerWorld) {
                     ((ServerWorld) world).spawnParticles(Indexed.CRYSTAL_BREAK, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, 20, 0.25, 0.25, 0.25, 0);
@@ -132,7 +125,7 @@ public class CrystalGlobeBlock extends Block {
                 return ActionResult.FAIL;
             }
         } else if(player.getMainHandStack().isEmpty() && state.get(LEVEL) >= MAX_LEVEL) {
-            world.playSound(null, pos, Indexed.CRYSTAL_HARVEST_SOUND_EVENT, SoundCategory.BLOCKS, 1f, 0.9f + world.getRandom().nextFloat(0.2f));
+            world.playSound(null, pos, Indexed.CRYSTAL_HARVEST_SOUND_EVENT, SoundCategory.BLOCKS, 1f, 0.9f + world.getRandom().nextFloat()/ 5.0f);
 
             world.setBlockState(pos, state.with(LEVEL, 0), Block.NOTIFY_ALL);
             StatusEffectInstance statusEffectInstance = new StatusEffectInstance(Indexed.ENCHANTED_STATUS_EFFECT, 300*20);
@@ -244,11 +237,11 @@ public class CrystalGlobeBlock extends Block {
 
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         if (random.nextInt(3) == 0 && state.get(LEVEL) >= MAX_LEVEL) {
-            world.addParticle(Indexed.CRYSTAL_HARVEST, pos.getX()+(random.nextDouble(1)), pos.getY()+(random.nextDouble(1)), pos.getZ()+(random.nextDouble(1)), random.nextGaussian() * 0.005D, random.nextGaussian() * 0.005D, random.nextGaussian() * 0.005D);
+            world.addParticle(Indexed.CRYSTAL_HARVEST, pos.getX()+(random.nextDouble()), pos.getY()+(random.nextDouble()), pos.getZ()+(random.nextDouble()), random.nextGaussian() * 0.005D, random.nextGaussian() * 0.005D, random.nextGaussian() * 0.005D);
         }
 
         if (random.nextInt(24) == 0 && state.get(LEVEL) >= MAX_LEVEL) {
-            world.playSound(pos.getX(), pos.getY(), pos.getZ(), Indexed.CRYSTAL_AMBIENT_SOUND_EVENT, SoundCategory.BLOCKS, 2f, 0.8f + world.getRandom().nextFloat(0.4f), true);
+            world.playSound(pos.getX(), pos.getY(), pos.getZ(), Indexed.CRYSTAL_AMBIENT_SOUND_EVENT, SoundCategory.BLOCKS, 2f, 0.8f + world.getRandom().nextFloat() / 2.5f, true);
         }
 
     }

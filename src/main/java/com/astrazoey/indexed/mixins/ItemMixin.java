@@ -1,7 +1,7 @@
 package com.astrazoey.indexed.mixins;
 
+import com.astrazoey.indexed.ConfigMain;
 import com.astrazoey.indexed.EnchantingType;
-import com.astrazoey.indexed.EnchantingTypes;
 import com.astrazoey.indexed.Indexed;
 import com.astrazoey.indexed.MaxEnchantingSlots;
 import net.minecraft.client.item.TooltipContext;
@@ -17,11 +17,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -32,10 +28,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 @Mixin(Item.class)
 public abstract class ItemMixin implements MaxEnchantingSlots {
@@ -60,11 +54,19 @@ public abstract class ItemMixin implements MaxEnchantingSlots {
         Map<Enchantment, Integer> enchantingMap = EnchantmentHelper.get(itemStack);
 
         int totalLevels = 0;
-
-        for(int enchantmentLevel : enchantingMap.values()) {
-            totalLevels += enchantmentLevel;
+        if (ConfigMain.experimentalCurseOverhaul) {
+            for (Map.Entry<Enchantment, Integer> entry : enchantingMap.entrySet()) {
+                if (entry.getKey().isCursed()) {
+                    totalLevels -= entry.getValue();
+                } else {
+                    totalLevels += entry.getValue();
+                }
+            }
+        } else {
+            for (int enchantmentLevel : enchantingMap.values()) {
+                totalLevels += enchantmentLevel;
+            }
         }
-
         usedEnchantingSlots = totalLevels;
 
         return totalLevels;
@@ -90,13 +92,12 @@ class ItemStackMixin {
     public static void appendEnchantments(List<Text> tooltip, NbtList enchantments) {}
 
     @Inject(method="getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item;appendTooltip(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Ljava/util/List;Lnet/minecraft/client/item/TooltipContext;)V"), locals = LocalCapture.CAPTURE_FAILHARD)
-    public void appendTooltip(PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir, List list, int i) {
+    public void appendTooltip(@Nullable PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir, List<MutableText> list, MutableText mutableText, int i) {
         //if not an enchanted book
         if(((ItemStack) (Object) this).getItem() != Items.ENCHANTED_BOOK) {
             //If enchantable, add text.
             EnchantingType enchantingType = MaxEnchantingSlots.getEnchantType(((ItemStack) (Object) this));
             if(enchantingType != null) {
-                MutableText mutableText;
                 Formatting formatting;
 
                 if(MaxEnchantingSlots.getCurrent(((ItemStack) (Object) this)) <= enchantingType.getMaxEnchantingSlots()) {
@@ -105,13 +106,13 @@ class ItemStackMixin {
                     formatting = Formatting.RED;
                 }
 
-                mutableText = (new TranslatableText("item.indexed.enchantment_tooltip", MaxEnchantingSlots.getCurrent((ItemStack) (Object) this), MaxEnchantingSlots.getEnchantType((ItemStack) (Object) this).getMaxEnchantingSlots())).formatted(formatting);
+                mutableText = Text.translatable("item.indexed.enchantment_tooltip", MaxEnchantingSlots.getCurrent((ItemStack) (Object) this), MaxEnchantingSlots.getEnchantType((ItemStack) (Object) this).getMaxEnchantingSlots()).formatted(formatting);
 
                 list.add(mutableText);
             }
 
             if(EnchantmentHelper.getLevel(Indexed.MYSTERY_CURSE, ((ItemStack) (Object) this)) > 0) {
-                list.add(new TranslatableText("enchantment.indexed.mystery_tooltip").formatted(Formatting.OBFUSCATED, Formatting.RED));
+                list.add(Text.translatable("enchantment.indexed.mystery_tooltip").formatted(Formatting.OBFUSCATED, Formatting.RED));
             }
 
         }

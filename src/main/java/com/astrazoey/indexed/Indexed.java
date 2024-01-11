@@ -12,11 +12,16 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
+import net.fabricmc.fabric.api.loot.v2.FabricLootPoolBuilder;
+import net.fabricmc.fabric.api.loot.v2.FabricLootTableBuilder;
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.object.builder.v1.advancement.CriterionRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.SharedConstants;
+import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.*;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.BlockModelRenderer;
@@ -30,6 +35,8 @@ import net.minecraft.loot.*;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -37,7 +44,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
-import net.minecraft.util.registry.Registry;
 import org.lwjgl.system.CallbackI;
 
 import java.util.Iterator;
@@ -52,66 +58,65 @@ public class Indexed implements ModInitializer {
 
     //Enchantments
     public static Enchantment SLOW_BURN = Registry.register(
-            Registry.ENCHANTMENT,
+            Registries.ENCHANTMENT,
             new Identifier("indexed", "slow_burn"),
             new SlowBurnEnchantment()
     );
 
     public static Enchantment QUICK_FLIGHT = Registry.register(
-            Registry.ENCHANTMENT,
+            Registries.ENCHANTMENT,
             new Identifier("indexed", "quick_flight"),
             new SlowBurnEnchantment()
     );
 
     public static Enchantment FORGERY = Registry.register(
-            Registry.ENCHANTMENT,
+            Registries.ENCHANTMENT,
             new Identifier("indexed", "forgery"),
             new ForgeryEnchantment()
     );
 
     public static Enchantment MYSTERY_CURSE = Registry.register(
-            Registry.ENCHANTMENT,
+            Registries.ENCHANTMENT,
             new Identifier("indexed", "mystery_curse"),
             new MysteryCurseEnchantment()
     );
 
     public static Enchantment HIDDEN_CURSE = Registry.register(
-            Registry.ENCHANTMENT,
+            Registries.ENCHANTMENT,
             new Identifier("indexed", "hidden_curse"),
             new HiddenCurseEnchantment()
     );
 
     public static Enchantment KEEPING = Registry.register(
-            Registry.ENCHANTMENT,
+            Registries.ENCHANTMENT,
             new Identifier("indexed", "keeping"),
             new KeepingEnchantment()
     );
 
     public static Enchantment ESSENCE = Registry.register(
-            Registry.ENCHANTMENT,
+            Registries.ENCHANTMENT,
             new Identifier("indexed", "essence"),
             new EssenceEnchantment()
     );
 
 
     //Blocks
-    public static final Block CRYSTAL_GLOBE = new CrystalGlobeBlock(FabricBlockSettings.
-            of(Material.AMETHYST).
-            strength(1.5f).
-            hardness(1.5f).
-            luminance(CrystalGlobeBlock.STATE_TO_LUMINANCE).
-            sounds(BlockSoundGroup.AMETHYST_BLOCK).
-            breakByHand(true).
-            nonOpaque()
+    public static final Block CRYSTAL_GLOBE = new CrystalGlobeBlock(FabricBlockSettings.create()
+            .strength(1.5f)
+            .hardness(1.5f)
+            .luminance(CrystalGlobeBlock.STATE_TO_LUMINANCE)
+            .sounds(BlockSoundGroup.AMETHYST_BLOCK)
+//          .breakByHand(true)
+            .nonOpaque()
     );
 
     //Sounds
     public static final Identifier CRYSTAL_USE_SOUND = new Identifier("indexed","use_crystal_globe");
-    public static SoundEvent CRYSTAL_USE_SOUND_EVENT = new SoundEvent(CRYSTAL_USE_SOUND);
+    public static SoundEvent CRYSTAL_USE_SOUND_EVENT = SoundEvent.of(CRYSTAL_USE_SOUND);
     public static final Identifier CRYSTAL_HARVEST_SOUND = new Identifier("indexed","harvest_crystal_globe");
-    public static SoundEvent CRYSTAL_HARVEST_SOUND_EVENT = new SoundEvent(CRYSTAL_HARVEST_SOUND);
+    public static SoundEvent CRYSTAL_HARVEST_SOUND_EVENT = SoundEvent.of(CRYSTAL_HARVEST_SOUND);
     public static final Identifier CRYSTAL_AMBIENT_SOUND = new Identifier("indexed","crystal_globe_ambient");
-    public static SoundEvent CRYSTAL_AMBIENT_SOUND_EVENT = new SoundEvent(CRYSTAL_AMBIENT_SOUND);
+    public static SoundEvent CRYSTAL_AMBIENT_SOUND_EVENT = SoundEvent.of(CRYSTAL_AMBIENT_SOUND);
 
     //Particles
     public static final DefaultParticleType CRYSTAL_HARVEST = FabricParticleTypes.simple();
@@ -153,35 +158,35 @@ public class Indexed implements ModInitializer {
         IndexedItems.registerItems();
 
         //Blocks
-        Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "crystal_globe"), CRYSTAL_GLOBE);
-        Registry.register(Registry.ITEM, new Identifier(MOD_ID, "crystal_globe"), new BlockItem(CRYSTAL_GLOBE, new FabricItemSettings().group(ItemGroup.MISC)));
+        Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "crystal_globe"), CRYSTAL_GLOBE);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "crystal_globe"), new BlockItem(CRYSTAL_GLOBE, new FabricItemSettings()));
 
         BlockRenderLayerMap.INSTANCE.putBlock(CRYSTAL_GLOBE, RenderLayer.getCutout());
 
         //Sounds
-        Registry.register(Registry.SOUND_EVENT, CRYSTAL_USE_SOUND, CRYSTAL_USE_SOUND_EVENT);
-        Registry.register(Registry.SOUND_EVENT, CRYSTAL_HARVEST_SOUND, CRYSTAL_HARVEST_SOUND_EVENT);
-        Registry.register(Registry.SOUND_EVENT, CRYSTAL_AMBIENT_SOUND, CRYSTAL_AMBIENT_SOUND_EVENT);
+        Registry.register(Registries.SOUND_EVENT, CRYSTAL_USE_SOUND, CRYSTAL_USE_SOUND_EVENT);
+        Registry.register(Registries.SOUND_EVENT, CRYSTAL_HARVEST_SOUND, CRYSTAL_HARVEST_SOUND_EVENT);
+        Registry.register(Registries.SOUND_EVENT, CRYSTAL_AMBIENT_SOUND, CRYSTAL_AMBIENT_SOUND_EVENT);
 
         //Particles
-        Registry.register(Registry.PARTICLE_TYPE, new Identifier(MOD_ID, "crystal_harvest"), CRYSTAL_HARVEST);
-        Registry.register(Registry.PARTICLE_TYPE, new Identifier(MOD_ID, "crystal_break"), CRYSTAL_BREAK);
+        Registry.register(Registries.PARTICLE_TYPE, new Identifier(MOD_ID, "crystal_harvest"), CRYSTAL_HARVEST);
+        Registry.register(Registries.PARTICLE_TYPE, new Identifier(MOD_ID, "crystal_break"), CRYSTAL_BREAK);
 
 
         //Status Effects
-        Registry.register(Registry.STATUS_EFFECT, new Identifier(MOD_ID, "enchanted"), ENCHANTED_STATUS_EFFECT);
+        Registry.register(Registries.STATUS_EFFECT, new Identifier(MOD_ID, "enchanted"), ENCHANTED_STATUS_EFFECT);
 
         //Criterion Registration
-        CriterionRegistryAccessor.registerCriterion(OVERCHARGE_ITEM);
-        CriterionRegistryAccessor.registerCriterion(ENCHANT_GOLD_BOOK);
-        CriterionRegistryAccessor.registerCriterion(REPAIR_ITEM);
-        CriterionRegistryAccessor.registerCriterion(GRIND_ESSENCE);
-        CriterionRegistryAccessor.registerCriterion(MULTISHOT_CROSSBOW);
-        CriterionRegistryAccessor.registerCriterion(MAX_GOLD);
-        CriterionRegistryAccessor.registerCriterion(MAX_KNOCKBACK);
-        CriterionRegistryAccessor.registerCriterion(USE_CRYSTAL_GLOBE);
-        CriterionRegistryAccessor.registerCriterion(FILL_CRYSTAL_GLOBE);
-        CriterionRegistryAccessor.registerCriterion(ENCHANTED_ADVANCEMENT);
+        Criteria.register(OVERCHARGE_ITEM);
+        Criteria.register(ENCHANT_GOLD_BOOK);
+        Criteria.register(REPAIR_ITEM);
+        Criteria.register(GRIND_ESSENCE);
+        Criteria.register(MULTISHOT_CROSSBOW);
+        Criteria.register(MAX_GOLD);
+        Criteria.register(MAX_KNOCKBACK);
+        Criteria.register(USE_CRYSTAL_GLOBE);
+        Criteria.register(FILL_CRYSTAL_GLOBE);
+        Criteria.register(ENCHANTED_ADVANCEMENT);
 
 
         //Ores Drop Experience
@@ -192,71 +197,102 @@ public class Indexed implements ModInitializer {
         SetOreExperience.set(Blocks.GOLD_ORE, UniformIntProvider.create(2,4));
         SetOreExperience.set(Blocks.DEEPSLATE_GOLD_ORE, UniformIntProvider.create(2,4));
 
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(content -> {
+            content.add(IndexedItems.GOLD_BOUND_BOOK);
+            content.add(CRYSTAL_GLOBE.asItem());
+
+        });
+
         //Add Items to Chests
-        LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
-            if(LootTables.END_CITY_TREASURE_CHEST.equals(id) ||
-                    LootTables.ABANDONED_MINESHAFT_CHEST.equals(id) ||
-                    LootTables.STRONGHOLD_LIBRARY_CHEST.equals(id) ||
-                    LootTables.BASTION_TREASURE_CHEST.equals(id) ||
-                    LootTables.WOODLAND_MANSION_CHEST.equals(id) ||
-                    LootTables.NETHER_BRIDGE_CHEST.equals(id) ||
-                    LootTables.PILLAGER_OUTPOST_CHEST.equals(id) ||
-                    LootTables.RUINED_PORTAL_CHEST.equals(id)) {
-                supplier.copyFrom(manager.getTable(INDEXED_LOOT));
-
-            }
-        }));
-
-        LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
-            if(LootTables.NETHER_BRIDGE_CHEST.equals(id)) {
-                supplier.copyFrom(manager.getTable(INDEXED_NETHER_BRIDGE));
-
-            }
-        }));
-
-        LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
-            if(LootTables.PILLAGER_OUTPOST_CHEST.equals(id)) {
-                supplier.copyFrom(manager.getTable(INDEXED_OUTPOST));
-            }
-        }));
-
-        LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
-            if(LootTables.WOODLAND_MANSION_CHEST.equals(id)) {
-                supplier.copyFrom(manager.getTable(INDEXED_MANSION));
-            }
-        }));
-
-        LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
-            if(LootTables.ABANDONED_MINESHAFT_CHEST.equals(id)) {
-                supplier.copyFrom(manager.getTable(INDEXED_MINESHAFT));
-            }
-        }));
-
-        LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
-            if(LootTables.SHIPWRECK_TREASURE_CHEST.equals(id)) {
-                supplier.copyFrom(manager.getTable(INDEXED_SHIPWRECK));
-            }
-        }));
-
-        LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
-            if(LootTables.BURIED_TREASURE_CHEST.equals(id)) {
-                supplier.copyFrom(manager.getTable(INDEXED_BURIED_TREASURE));
-            }
-        }));
-
-        LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
-            if(LootTables.UNDERWATER_RUIN_BIG_CHEST.equals(id) ||
-                    LootTables.UNDERWATER_RUIN_SMALL_CHEST.equals(id)) {
-                supplier.copyFrom(manager.getTable(INDEXED_WATER_RUIN));
-            }
-        }));
-
-        LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
-            if(LootTables.JUNGLE_TEMPLE_CHEST.equals(id) ||
-                LootTables.DESERT_PYRAMID_CHEST.equals(id)) {
-                supplier.copyFrom(manager.getTable(INDEXED_TEMPLE));
-            }
-        }));
+//        LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
+//            if(LootTables.END_CITY_TREASURE_CHEST.equals(id) ||
+//                    LootTables.ABANDONED_MINESHAFT_CHEST.equals(id) ||
+//                    LootTables.STRONGHOLD_LIBRARY_CHEST.equals(id) ||
+//                    LootTables.BASTION_TREASURE_CHEST.equals(id) ||
+//                    LootTables.WOODLAND_MANSION_CHEST.equals(id) ||
+//                    LootTables.NETHER_BRIDGE_CHEST.equals(id) ||
+//                    LootTables.PILLAGER_OUTPOST_CHEST.equals(id) ||
+//                    LootTables.RUINED_PORTAL_CHEST.equals(id)) {
+//                supplier.copyFrom(manager.getLootTable(INDEXED_LOOT));
+//
+//            }
+//        }));
+//
+//        LootTableEvents.MODIFY.register((resourceManager, manager, id, tableBuilder, source) -> {
+//            if(LootTables.NETHER_BRIDGE_CHEST.equals(id)) {
+//                LootTable table = manager.getLootTable(INDEXED_NETHER_BRIDGE);
+//                for (LootPool pool : table.pools) {
+//                    tableBuilder.pool(pool);
+//                }
+//                return FabricLootTableBuilder.copyOf(manager.getLootTable(INDEXED_NETHER_BRIDGE)).build();
+//            }
+//            return null;
+//        });
+//
+//        LootTableEvents.REPLACE.register((resourceManager, manager, id, original, source) -> {
+//            if(LootTables.NETHER_BRIDGE_CHEST.equals(id)) {
+//                return FabricLootTableBuilder.copyOf(manager.getLootTable(INDEXED_NETHER_BRIDGE)).build();
+//            }
+//            return null;
+//        });
+//
+//        LootTableEvents.REPLACE.register((resourceManager, manager, id, original, source) -> {
+//            if(LootTables.PILLAGER_OUTPOST_CHEST.equals(id)) {
+//                return FabricLootTableBuilder.copyOf(manager.getLootTable(INDEXED_OUTPOST)).build();
+//            }
+//            return null;
+//        });
+//
+//        LootTableEvents.REPLACE.register((resourceManager, manager, id, original, source) -> {
+//            if(LootTables.WOODLAND_MANSION_CHEST.equals(id)) {
+//                return FabricLootTableBuilder.copyOf(manager.getLootTable(INDEXED_MANSION)).build();
+//            }
+//            return null;
+//        });
+//
+//        LootTableEvents.REPLACE.register((resourceManager, manager, id, original, source) -> {
+//            if(LootTables.ABANDONED_MINESHAFT_CHEST.equals(id)) {
+//                return FabricLootTableBuilder.copyOf(manager.getLootTable(INDEXED_MINESHAFT)).build();
+//            }
+//            return null;
+//        });
+//
+//        LootTableEvents.REPLACE.register((resourceManager, manager, id, original, source) -> {
+//            if(LootTables.SHIPWRECK_TREASURE_CHEST.equals(id)) {
+//                return FabricLootTableBuilder.copyOf(manager.getLootTable(INDEXED_SHIPWRECK)).build();
+//            }
+//            return null;
+//        });
+//
+//        LootTableEvents.REPLACE.register((resourceManager, manager, id, original, source) -> {
+//            if(LootTables.WOODLAND_MANSION_CHEST.equals(id)) {
+//                return FabricLootTableBuilder.copyOf(manager.getLootTable(INDEXED_MANSION)).build();
+//            }
+//            return null;
+//        });
+//
+//        LootTableEvents.REPLACE.register((resourceManager, manager, id, original, source) -> {
+//            if(LootTables.BURIED_TREASURE_CHEST.equals(id)) {
+//                return FabricLootTableBuilder.copyOf(manager.getLootTable(INDEXED_BURIED_TREASURE)).build();
+//            }
+//            return null;
+//        });
+//
+//        LootTableEvents.REPLACE.register((resourceManager, manager, id, original, source) -> {
+//            if(LootTables.UNDERWATER_RUIN_BIG_CHEST.equals(id) ||
+//                    LootTables.UNDERWATER_RUIN_SMALL_CHEST.equals(id)) {
+//                return FabricLootTableBuilder.copyOf(manager.getLootTable(INDEXED_WATER_RUIN)).build();
+//            }
+//            return null;
+//        });
+//
+//        LootTableEvents.REPLACE.register((resourceManager, manager, id, original, source) -> {
+//            if(LootTables.JUNGLE_TEMPLE_CHEST.equals(id) ||
+//                    LootTables.DESERT_PYRAMID_CHEST.equals(id)) {
+//                return FabricLootTableBuilder.copyOf(manager.getLootTable(INDEXED_TEMPLE)).build();
+//            }
+//            return null;
+//        });
 
 
         //Registers Config
