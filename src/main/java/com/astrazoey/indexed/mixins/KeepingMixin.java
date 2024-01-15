@@ -1,6 +1,8 @@
 package com.astrazoey.indexed.mixins;
 
 import com.astrazoey.indexed.Indexed;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -29,23 +31,25 @@ class ServerPlayerEntityMixin {
     }
 }
 
-@Mixin(PlayerInventory.class)
+@Mixin(value = PlayerInventory.class)
 class PlayerInventoryMixin {
 
-
-    @Redirect(method="dropAll", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isEmpty()Z"))
-    public boolean saveKeepingItems(ItemStack itemStack) {
+    @WrapOperation(
+            method="dropAll",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isEmpty()Z")
+    )
+    public boolean saveKeepingItems(ItemStack itemStack, Operation<Boolean> original) {
         if(!itemStack.isEmpty()) {
             int keepingLevel = EnchantmentHelper.getLevel(Indexed.KEEPING, itemStack);
             if(keepingLevel <= 0) {
-                return false;
+                return original.call(itemStack);
             } else {
                 int randomValue = (int) (Math.random() * 100);
                 int keepingFactor = 50 + (keepingLevel * 10);
                 return (keepingFactor >= randomValue);
             }
         } else {
-            return true;
+            return original.call(itemStack);
         }
     }
 
