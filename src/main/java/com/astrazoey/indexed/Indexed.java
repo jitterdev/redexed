@@ -3,51 +3,29 @@ package com.astrazoey.indexed;
 import com.astrazoey.indexed.blocks.CrystalGlobeBlock;
 import com.astrazoey.indexed.criterion.*;
 import com.astrazoey.indexed.enchantments.*;
-import com.astrazoey.indexed.mixins.CriterionRegistryAccessor;
 import com.astrazoey.indexed.registry.IndexedItems;
 import com.astrazoey.indexed.status_effects.EnchantedStatusEffect;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
-import net.fabricmc.fabric.api.loot.v2.FabricLootPoolBuilder;
-import net.fabricmc.fabric.api.loot.v2.FabricLootTableBuilder;
-import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
-import net.fabricmc.fabric.api.object.builder.v1.advancement.CriterionRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
-import net.minecraft.SharedConstants;
 import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.block.*;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.block.BlockModelRenderer;
-import net.minecraft.client.render.block.BlockRenderManager;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.item.*;
-import net.minecraft.loot.*;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemGroups;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
-import org.lwjgl.system.CallbackI;
-
-import java.util.Iterator;
-import java.util.Map;
 
 
 public class Indexed implements ModInitializer {
@@ -161,7 +139,6 @@ public class Indexed implements ModInitializer {
         Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "crystal_globe"), CRYSTAL_GLOBE);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "crystal_globe"), new BlockItem(CRYSTAL_GLOBE, new FabricItemSettings()));
 
-        BlockRenderLayerMap.INSTANCE.putBlock(CRYSTAL_GLOBE, RenderLayer.getCutout());
 
         //Sounds
         Registry.register(Registries.SOUND_EVENT, CRYSTAL_USE_SOUND, CRYSTAL_USE_SOUND_EVENT);

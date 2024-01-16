@@ -7,13 +7,20 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.minecraft.client.particle.DamageParticle;
 import net.minecraft.client.particle.EndRodParticle;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+
+import static com.astrazoey.indexed.Indexed.CRYSTAL_GLOBE;
 
 public class Client implements ClientModInitializer {
 
     @Override
     @Environment(EnvType.CLIENT)
     public void onInitializeClient() {
+
+        BlockRenderLayerMap.INSTANCE.putBlock(CRYSTAL_GLOBE, RenderLayer.getCutout());
+
 
         //Initialize Particle
 //        ClientSpriteRegistryCallback.event(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).register(((atlasTexture, registry) -> {
