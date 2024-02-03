@@ -186,17 +186,7 @@ public class Indexed implements ModInitializer {
 
         });
 
-        ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
-            NbtCompound nbtCompound = stack.getOrCreateNbt();
-            if (nbtCompound.getBoolean("Unbreakable") && MaxEnchantingSlots.getCurrent(stack) > MaxEnchantingSlots.getEnchantType(stack).getMaxEnchantingSlots()) {
-                stack.addHideFlag(ItemStack.TooltipSection.UNBREAKABLE);
-                lines.add(Text.translatable("item.unbreakable").formatted(Formatting.RED).formatted(Formatting.STRIKETHROUGH));
-            } else if (nbtCompound.getBoolean("Unbreakable") && nbtCompound.contains("HideFlags", NbtElement.NUMBER_TYPE) && MaxEnchantingSlots.getCurrent(stack) <= MaxEnchantingSlots.getEnchantType(stack).getMaxEnchantingSlots() && lines.contains(Text.translatable("item.unbreakable").formatted(Formatting.RED).formatted(Formatting.STRIKETHROUGH))) {
-                int flags = nbtCompound.getInt("HideFlags");
-                nbtCompound.putInt("HideFlags", flags & ~ItemStack.TooltipSection.UNBREAKABLE.getFlag());
-                lines.remove(Text.translatable("item.unbreakable").formatted(Formatting.RED).formatted(Formatting.STRIKETHROUGH));
-            }
-        });
+
 
         //Add Items to Chests
 //        LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
