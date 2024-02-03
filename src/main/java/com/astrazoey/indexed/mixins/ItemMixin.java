@@ -24,12 +24,15 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Mixin(Item.class)
 public abstract class ItemMixin implements MaxEnchantingSlots {
@@ -54,20 +57,23 @@ public abstract class ItemMixin implements MaxEnchantingSlots {
         Map<Enchantment, Integer> enchantingMap = EnchantmentHelper.get(itemStack);
 
         int totalLevels = 0;
-        if (ConfigMain.experimentalCurseOverhaul) {
-            for (Map.Entry<Enchantment, Integer> entry : enchantingMap.entrySet()) {
-                if (entry.getKey().isCursed()) {
-                    totalLevels -= entry.getValue();
-                } else {
-                    totalLevels += entry.getValue();
+        EnchantingType enchantingType = MaxEnchantingSlots.getEnchantType(itemStack);
+        if (enchantingType != null) {
+            if (ConfigMain.experimentalCurseOverhaul) {
+                for (Map.Entry<Enchantment, Integer> entry : enchantingMap.entrySet()) {
+                    if (entry.getKey().isCursed()) {
+                        totalLevels -= entry.getValue();
+                    } else {
+                        totalLevels += entry.getValue();
+                    }
+                }
+            } else {
+                for (int enchantmentLevel : enchantingMap.values()) {
+                    totalLevels += enchantmentLevel;
                 }
             }
-        } else {
-            for (int enchantmentLevel : enchantingMap.values()) {
-                totalLevels += enchantmentLevel;
-            }
+            usedEnchantingSlots = totalLevels;
         }
-        usedEnchantingSlots = totalLevels;
 
         return totalLevels;
     }
@@ -115,6 +121,26 @@ class ItemStackMixin {
                 list.add(Text.translatable("enchantment.indexed.mystery_tooltip").formatted(Formatting.OBFUSCATED, Formatting.RED));
             }
 
+        }
+    }
+
+    @Inject(method="isDamageable", at = @At(value = "RETURN"), cancellable = true)
+    private void noUnbreakableOvercharge(CallbackInfoReturnable<Boolean> cir) {
+        EnchantingType enchantingType = MaxEnchantingSlots.getEnchantType(((ItemStack) (Object) this));
+        if(enchantingType != null) {
+            if (MaxEnchantingSlots.getCurrent((ItemStack) (Object) this) > enchantingType.getMaxEnchantingSlots()) {
+                cir.setReturnValue(true);
+            }
+        }
+    }
+
+    @Inject(method="setDamage", at = @At(value = "HEAD"), cancellable = true)
+    private void noUnbreakableOvercharge(int damage, CallbackInfo ci) {
+        EnchantingType enchantingType = MaxEnchantingSlots.getEnchantType(((ItemStack) (Object) this));
+        if(enchantingType != null) {
+            if (MaxEnchantingSlots.getCurrent((ItemStack) (Object) this) > enchantingType.getMaxEnchantingSlots() && ((ItemStack) (Object) this).getDamage() > damage) {
+                ci.cancel();
+            }
         }
     }
 

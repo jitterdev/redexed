@@ -30,11 +30,17 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableTextContent;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Mixin(value = AnvilScreenHandler.class, priority = 999)
 public class AnvilScreenHandlerMixin {
 
+    // 1st item
     ItemStack itemStack1;
+    // 2nd item (the one being applied to the first item)
     ItemStack itemStack3;
+
 
     boolean overcharged = false;
 
@@ -107,14 +113,21 @@ public class AnvilScreenHandlerMixin {
     @ModifyConstant(method="canTakeOutput", constant = @Constant(expandZeroConditions = {Constant.Condition.GREATER_THAN_ZERO}))
     public int allowAnyCostForOutput(int cost) {
         if (itemStack3.getItem() instanceof EnchantedBookItem && ConfigMain.experimentalCurseOverhaul) {
-            for (NbtElement enchant : EnchantedBookItem.getEnchantmentNbt(itemStack3)) {
-                Identifier identifier = EnchantmentHelper.getIdFromNbt((NbtCompound) enchant);
-                Enchantment enchantment = Registries.ENCHANTMENT.get(identifier);
-                if (!enchantment.isCursed()) {
-                    return 50000;
+            Map<Enchantment, Integer> enchantingMap = EnchantedBookItem.getEnchantmentNbt(itemStack3)
+                .stream()
+                    .collect(Collectors.toMap(
+                            (enchantment) -> Registries.ENCHANTMENT.get(EnchantmentHelper.getIdFromNbt((NbtCompound) enchantment)),
+                            (integer) -> EnchantmentHelper.getLevelFromNbt((NbtCompound) integer)
+                    ));
+            boolean onlyCursed = true;
+            for (Map.Entry<Enchantment, Integer> entry : enchantingMap.entrySet()) {
+                if (!entry.getKey().isCursed()) {
+                    onlyCursed = false;
                 }
             }
-            return -1;
+            if (onlyCursed) {
+                return -1;
+            }
         }
         if(overcharged) {
             return 50000; //prevent taking out overcharged items
@@ -124,6 +137,7 @@ public class AnvilScreenHandlerMixin {
 
     @Redirect(method="updateResult", at = @At(value="INVOKE", target="Lnet/minecraft/inventory/CraftingResultInventory;setStack(ILnet/minecraft/item/ItemStack;)V", ordinal=4))
     public void denyExpensiveTransactions(CraftingResultInventory craftingResultInventory, int slot, ItemStack stack) {
+
         //checks if the enchanting hasn't exceeded itself
         if(MaxEnchantingSlots.getEnchantType(stack) != null) {
             if (MaxEnchantingSlots.getCurrent(stack) > MaxEnchantingSlots.getEnchantType(stack).getMaxEnchantingSlots()) {

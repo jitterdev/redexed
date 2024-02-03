@@ -6,6 +6,7 @@ import com.astrazoey.indexed.enchantments.*;
 import com.astrazoey.indexed.registry.IndexedItems;
 import com.astrazoey.indexed.status_effects.EnchantedStatusEffect;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -19,11 +20,16 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroups;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 
@@ -178,6 +184,18 @@ public class Indexed implements ModInitializer {
             content.add(IndexedItems.GOLD_BOUND_BOOK);
             content.add(CRYSTAL_GLOBE.asItem());
 
+        });
+
+        ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
+            NbtCompound nbtCompound = stack.getOrCreateNbt();
+            if (nbtCompound.getBoolean("Unbreakable") && MaxEnchantingSlots.getCurrent(stack) > MaxEnchantingSlots.getEnchantType(stack).getMaxEnchantingSlots()) {
+                stack.addHideFlag(ItemStack.TooltipSection.UNBREAKABLE);
+                lines.add(Text.translatable("item.unbreakable").formatted(Formatting.RED).formatted(Formatting.STRIKETHROUGH));
+            } else if (nbtCompound.getBoolean("Unbreakable") && nbtCompound.contains("HideFlags", NbtElement.NUMBER_TYPE) && MaxEnchantingSlots.getCurrent(stack) <= MaxEnchantingSlots.getEnchantType(stack).getMaxEnchantingSlots() && lines.contains(Text.translatable("item.unbreakable").formatted(Formatting.RED).formatted(Formatting.STRIKETHROUGH))) {
+                int flags = nbtCompound.getInt("HideFlags");
+                nbtCompound.putInt("HideFlags", flags & ~ItemStack.TooltipSection.UNBREAKABLE.getFlag());
+                lines.remove(Text.translatable("item.unbreakable").formatted(Formatting.RED).formatted(Formatting.STRIKETHROUGH));
+            }
         });
 
         //Add Items to Chests
