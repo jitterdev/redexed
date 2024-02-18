@@ -1000,6 +1000,45 @@ public class Config {
         defaultConfig.put("crossbow_expansion:pouch_crossbow", EnchantingTypes.CROSSBOW.getEnchantabilityConfig());
         defaultConfig.put("crossbow_expansion:warden_crossbow", EnchantingTypes.CROSSBOW.getEnchantabilityConfig());
 
+        defaultConfig.put("simplyswords:brimstone_claymore", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:watcher_claymore", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:storms_edge", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:stormbringer", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:sword_on_a_stick", EnchantingTypes.WOOD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:bramblethorn", EnchantingTypes.WOOD_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:watching_warglaive", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:toxic_longsword", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:emberblade", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:hearthflame", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:soulkeeper", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:twisted_blade", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:soulstealer", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:soulrender", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:soulpyre", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:frostfall", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:molten_edge", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:livyatan", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:icewhisper", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:arcanethyst", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:thunderbrand", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:mjolnir", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:slumbering_lichblade", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:waking_lichblade", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:awakened_lichblade", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:shadowsting", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:dormant_relic", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:righteous_relic", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:tainted_relic", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:sunfire", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:harbinger", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:whisperwind", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:emberlash", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:waxweaver", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:hiveheart", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:stars_edge", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:wickpiercer", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+        defaultConfig.put("simplyswords:tempest", EnchantingTypes.NETHERITE_TIER.getEnchantabilityConfig());
+
 
 
 
